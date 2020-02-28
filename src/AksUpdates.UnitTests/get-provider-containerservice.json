@@ -1,0 +1,180 @@
+﻿{
+    "id": "/subscriptions/1234abcd-fddb-4637-a762-918a4cc06ee0/providers/Microsoft.ContainerService",
+    "namespace": "Microsoft.ContainerService",
+    "authorization": {
+        "applicationId": "abc",
+        "roleDefinitionId": "123",
+        "managedByRoleDefinitionId": "xyz"
+    },
+    "resourceTypes": [
+        {
+            "resourceType": "containerServices",
+            "locations": [
+                "Japan East",
+                "Central US",
+                "East US 2",
+                "Japan West",
+                "East Asia",
+                "South Central US",
+                "Australia East",
+                "Australia Southeast",
+                "Brazil South",
+                "Southeast Asia",
+                "West US",
+                "North Central US",
+                "West Europe",
+                "North Europe",
+                "East US",
+                "UK West",
+                "UK South",
+                "West Central US",
+                "West US 2",
+                "South India",
+                "Central India",
+                "West India",
+                "Canada East",
+                "Canada Central",
+                "Korea South",
+                "Korea Central"
+            ],
+            "apiVersions": [
+                "2017-07-01",
+                "2017-01-31",
+                "2016-09-30",
+                "2016-03-30"
+            ],
+            "capabilities": "None"
+        },
+        {
+            "resourceType": "managedClusters",
+            "locations": [
+                "East US",
+                "West Europe",
+                "Central US",
+                "Canada Central",
+                "Canada East",
+                "UK South",
+                "West US",
+                "West US 2",
+                "Australia East",
+                "North Europe",
+                "Japan East",
+                "East US 2"
+            ],
+            "apiVersions": [
+                "2018-03-31",
+                "2017-08-31"
+            ],
+            "capabilities": "None"
+        },
+        {
+            "resourceType": "locations",
+            "locations": [],
+            "apiVersions": [
+                "2017-08-31",
+                "2017-01-31",
+                "2016-09-30",
+                "2016-03-30",
+                "2015-11-01-preview"
+            ]
+        },
+        {
+            "resourceType": "locations/operationresults",
+            "locations": [
+                "East US",
+                "West Europe",
+                "Central US",
+                "UK West",
+                "West Central US",
+                "West US 2",
+                "South India",
+                "Central India",
+                "West India",
+                "Canada East",
+                "Canada Central",
+                "Korea South",
+                "Korea Central",
+                "UK South",
+                "Australia East",
+                "North Europe",
+                "Japan East",
+                "East US 2"
+            ],
+            "apiVersions": [
+                "2017-08-31",
+                "2016-03-30"
+            ]
+        },
+        {
+            "resourceType": "locations/operations",
+            "locations": [
+                "Japan East",
+                "Central US",
+                "East US 2",
+                "Japan West",
+                "East Asia",
+                "South Central US",
+                "Australia East",
+                "Australia Southeast",
+                "Brazil South",
+                "Southeast Asia",
+                "West US",
+                "North Central US",
+                "West Europe",
+                "North Europe",
+                "East US",
+                "UK West",
+                "UK South",
+                "West Central US",
+                "West US 2",
+                "South India",
+                "Central India",
+                "West India",
+                "Canada East",
+                "Canada Central",
+                "Korea South",
+                "Korea Central"
+            ],
+            "apiVersions": [
+                "2017-07-01",
+                "2017-01-31",
+                "2016-09-30",
+                "2016-03-30"
+            ]
+        },
+        {
+            "resourceType": "operations",
+            "locations": [],
+          "apiVersions": [
+            "2018-03-31",
+            "2017-08-31",
+            "2017-07-01",
+            "2017-01-31",
+            "2016-09-30",
+            "2016-03-30",
+            "2015-11-01-preview"
+          ]
+        },
+        {
+            "resourceType": "locations/orchestrators",
+            "locations": [
+                "East US",
+                "West Europe",
+                "Central US",
+                "Canada East",
+                "Canada Central",
+                "UK South",
+                "West US",
+                "West US 2",
+                "Australia East",
+                "North Europe",
+                "Japan East",
+                "East US 2"
+            ],
+            "apiVersions": [
+                "2017-09-30"
+            ]
+        }
+    ],
+    "registrationState": "Registered"
+}

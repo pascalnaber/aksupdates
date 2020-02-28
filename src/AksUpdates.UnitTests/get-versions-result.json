@@ -1,0 +1,334 @@
+﻿{
+  "id": "/subscriptions/subscriptionid/providers/Microsoft.ContainerService/locations/westeurope/orchestrators",
+  "name": "default",
+  "type": "Microsoft.ContainerService/locations/orchestrators",
+  "properties": {
+    "orchestrators": [
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.7.7",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.7.16"
+          },
+          {
+            "orchestratorVersion": "1.8.1"
+          },
+          {
+            "orchestratorVersion": "1.8.11"
+          },
+          {
+            "orchestratorVersion": "1.7.9"
+          },
+          {
+            "orchestratorVersion": "1.7.15"
+          },
+          {
+            "orchestratorVersion": "1.8.2"
+          },
+          {
+            "orchestratorVersion": "1.8.7"
+          },
+          {
+            "orchestratorVersion": "1.7.12"
+          },
+          {
+            "orchestratorVersion": "1.8.10"
+          },
+          {
+            "orchestratorVersion": "1.8.6"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.7.12",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.7.15"
+          },
+          {
+            "orchestratorVersion": "1.8.2"
+          },
+          {
+            "orchestratorVersion": "1.8.7"
+          },
+          {
+            "orchestratorVersion": "1.8.10"
+          },
+          {
+            "orchestratorVersion": "1.8.6"
+          },
+          {
+            "orchestratorVersion": "1.7.16"
+          },
+          {
+            "orchestratorVersion": "1.8.1"
+          },
+          {
+            "orchestratorVersion": "1.8.11"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.10.3"
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.8.10",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.9.1"
+          },
+          {
+            "orchestratorVersion": "1.9.6"
+          },
+          {
+            "orchestratorVersion": "1.9.2"
+          },
+          {
+            "orchestratorVersion": "1.8.11"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.8.6",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.8.7"
+          },
+          {
+            "orchestratorVersion": "1.8.10"
+          },
+          {
+            "orchestratorVersion": "1.9.1"
+          },
+          {
+            "orchestratorVersion": "1.9.6"
+          },
+          {
+            "orchestratorVersion": "1.8.11"
+          },
+          {
+            "orchestratorVersion": "1.9.2"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.7.16",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.8.1"
+          },
+          {
+            "orchestratorVersion": "1.8.11"
+          },
+          {
+            "orchestratorVersion": "1.8.2"
+          },
+          {
+            "orchestratorVersion": "1.8.7"
+          },
+          {
+            "orchestratorVersion": "1.8.10"
+          },
+          {
+            "orchestratorVersion": "1.8.6"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.9.1",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.9.2"
+          },
+          {
+            "orchestratorVersion": "1.10.3"
+          },
+          {
+            "orchestratorVersion": "1.9.6"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.9.6",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.10.3"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.7.9",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.8.6"
+          },
+          {
+            "orchestratorVersion": "1.7.16"
+          },
+          {
+            "orchestratorVersion": "1.8.1"
+          },
+          {
+            "orchestratorVersion": "1.8.11"
+          },
+          {
+            "orchestratorVersion": "1.8.7"
+          },
+          {
+            "orchestratorVersion": "1.7.15"
+          },
+          {
+            "orchestratorVersion": "1.8.2"
+          },
+          {
+            "orchestratorVersion": "1.7.12"
+          },
+          {
+            "orchestratorVersion": "1.8.10"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.8.1",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.8.11"
+          },
+          {
+            "orchestratorVersion": "1.9.2"
+          },
+          {
+            "orchestratorVersion": "1.8.2"
+          },
+          {
+            "orchestratorVersion": "1.8.7"
+          },
+          {
+            "orchestratorVersion": "1.8.10"
+          },
+          {
+            "orchestratorVersion": "1.8.6"
+          },
+          {
+            "orchestratorVersion": "1.9.1"
+          },
+          {
+            "orchestratorVersion": "1.9.6"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.8.11",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.9.1"
+          },
+          {
+            "orchestratorVersion": "1.9.6"
+          },
+          {
+            "orchestratorVersion": "1.9.2"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.9.2",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.10.3"
+          },
+          {
+            "orchestratorVersion": "1.9.6"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.7.15",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.8.2"
+          },
+          {
+            "orchestratorVersion": "1.8.7"
+          },
+          {
+            "orchestratorVersion": "1.8.10"
+          },
+          {
+            "orchestratorVersion": "1.8.6"
+          },
+          {
+            "orchestratorVersion": "1.7.16"
+          },
+          {
+            "orchestratorVersion": "1.8.1"
+          },
+          {
+            "orchestratorVersion": "1.8.11"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.8.2",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.8.11"
+          },
+          {
+            "orchestratorVersion": "1.9.2"
+          },
+          {
+            "orchestratorVersion": "1.8.7"
+          },
+          {
+            "orchestratorVersion": "1.8.10"
+          },
+          {
+            "orchestratorVersion": "1.8.6"
+          },
+          {
+            "orchestratorVersion": "1.9.1"
+          },
+          {
+            "orchestratorVersion": "1.9.6"
+          }
+        ]
+      },
+      {
+        "orchestratorType": "Kubernetes",
+        "orchestratorVersion": "1.8.7",
+        "upgrades": [
+          {
+            "orchestratorVersion": "1.9.6"
+          },
+          {
+            "orchestratorVersion": "1.8.11"
+          },
+          {
+            "orchestratorVersion": "1.9.2"
+          },
+          {
+            "orchestratorVersion": "1.8.10"
+          },
+          {
+            "orchestratorVersion": "1.9.1"
+          }
+        ]
+      }
+    ]
+  }
+}
