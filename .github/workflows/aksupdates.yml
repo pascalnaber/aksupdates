@@ -22,7 +22,10 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
     
     - name: Publish Azure Function project
-      run: dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
+      run: |
+        pushd ./src
+        dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
+        popd 
 
     - name: Package functions
       uses: actions/upload-artifact@v1
