@@ -73,7 +73,7 @@ jobs:
       - name: Configure environment variables
         run: |  
           pushd ${{ env.OUTPUT_PATH }}/infra/configuration  
-          # chmod +x ./configuration.sh
+          chmod +x ./configuration.sh
           ./configuration.sh aksupdates-dev.config
           popd
          
