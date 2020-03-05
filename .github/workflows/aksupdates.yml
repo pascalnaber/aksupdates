@@ -5,7 +5,7 @@ on:
 
 env:  
   DOTNET_VERSION: "3.1.100"
-  FUNCION_APP_NAME: aksupdates
+  FUNCION_APP_NAME: aksupdates-dev
   OUTPUT_PATH: "."
   
 jobs:

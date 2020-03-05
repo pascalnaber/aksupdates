@@ -20,7 +20,7 @@ namespace AksUpdates
             builder.Services.AddScoped<IAksUpdateOrchestrator, AksUpdateOrchestrator>();
             builder.Services.AddScoped<IAzureApi, AzureApi>();
             builder.Services.AddScoped<ITwitterApi, TwitterApi>();
-            builder.Services.AddScoped<IAzureTableStorage, AzureTableStorage>();
+            builder.Services.AddScoped<IAzureTableStorage, AzureTableStorage>();            
             builder.Services.AddMediatR(typeof(Startup));
         }
     }

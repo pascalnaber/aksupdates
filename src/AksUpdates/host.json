@@ -1,3 +1,12 @@
 {
-    "version": "2.0"
+  "version": "2.0",
+  "logging": {
+    "fileLoggingMode": "debugOnly",
+    "logLevel": {
+      // For all functions
+      "Function": "Trace",
+      // Default settings, e.g. for host
+      "default": "Trace"
+    }
+  }
 }

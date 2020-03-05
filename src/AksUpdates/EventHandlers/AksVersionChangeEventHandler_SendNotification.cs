@@ -1,6 +1,8 @@
 ﻿using AksUpdates.Apis.Twitter;
 using AksUpdates.Events;
+using AksUpdates.Models;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,23 +15,33 @@ namespace AksUpdates.EventHandlers
     {
         private const string hashTags = "#azure #aks #kubernetes";
         private readonly ITwitterApi twitterApi;
+        private readonly ILogger logger;
 
-        public AksVersionChangeEventHandler_SendNotification(ITwitterApi twitterApi)
+        public AksVersionChangeEventHandler_SendNotification(ITwitterApi twitterApi, ILogger<AksVersionChangeEventHandler_SendNotification> logger)
         {
             this.twitterApi = twitterApi;
+            this.logger = logger;
         }
 
         public Task Handle(AksNewVersionAvailableEvent notification, CancellationToken cancellationToken)
         {
             string tweet = BuildTweetMessage(notification);
-            twitterApi.PostTweet(new TweetMessage(tweet));
+            if (Toggles.SendNotification)
+                twitterApi.PostTweet(new TweetMessage(tweet));
+            else
+                logger.LogInformation($"Toggle triggered: would have send tweet: {tweet}");
+
             return Task.CompletedTask;
         }
 
         public Task Handle(AksNewLocationAvailableEvent notification, CancellationToken cancellationToken)
         {
             string tweet = BuildTweetMessage(notification);
-            twitterApi.PostTweet(new TweetMessage(tweet));
+            if (Toggles.SendNotification)
+                twitterApi.PostTweet(new TweetMessage(tweet));
+            else
+                logger.LogInformation($"Toggle triggered: would have send tweet: {tweet}");
+
             return Task.CompletedTask;
         }
 

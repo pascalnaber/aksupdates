@@ -19,6 +19,8 @@ namespace AksUpdates
         public const string TwitterAccessToken = "twitterAccessToken";
         public const string TwitterAccessTokenSecret = "twitterAccessTokenSecret";
 
+        public const string Toggle_SendNotification = "Toggle_SendNotification";
+
         public static string GetSetting(string name)
         {
             return System.Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
