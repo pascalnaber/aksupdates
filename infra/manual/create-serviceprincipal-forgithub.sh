@@ -1,7 +1,7 @@
 #!/bin/bash
 set -xe
 
-. ../provisioning/aksupdates-dev.config
+. ../aksupdates-dev.config
 SERVICEPRINCIPAL_NAME=spn-aksupdates-deployment
 
 az account set --subscription "$SUBSCRIPTION_ID"
@@ -12,7 +12,7 @@ az group create -l $LOCATION -n $RESOURCEGROUP_DATA
 RESOURCEGROUP_FUNCTIONAPP_DEVELOPMENT_RESOURCEID=$(az group show -n $RESOURCEGROUP_FUNCTIONAPP --query id -o tsv)
 RESOURCEGROUP_DATA_DEVELOPMENT_RESOURCEID=$(az group show -n $RESOURCEGROUP_DATA --query id -o tsv)
 
-. ../provisioning/aksupdates-prod.config
+. ../aksupdates-prod.config
 
 az account set --subscription "$SUBSCRIPTION_ID"
 

@@ -7,7 +7,9 @@ env:
   DOTNET_VERSION: "3.1.100"
   FUNCION_APP_NAME: aksupdates-dev
   OUTPUT_PATH: "."
-  
+  # toggle_SendNotification: "false"
+  # tableStorageName: "aksupdatesdev"
+
 jobs:
   build:
     name: Build
@@ -26,6 +28,10 @@ jobs:
         pushd ./src
         dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
         popd 
+    
+    - name: Copy infra files to artifacts
+      run: |        
+        cp -a /infra/. /${{ env.OUTPUT_PATH }}/       
 
     - name: Package functions
       uses: actions/upload-artifact@v1
@@ -49,9 +55,17 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           
-      - name: 'Run Azure Functions Action'
+      - name: 'Publish Azure Functions'
         uses: Azure/functions-action@v1
         id: fa
         with:
           app-name: ${{ env.FUNCION_APP_NAME }}       
           package: ${{ env.OUTPUT_PATH }}
+
+      - name: Configure environment variables
+        run: |  
+          pushd ./infra/configuration  
+          chmod +x ./configuration.sh
+          ./configuration.sh
+          popd
+         

@@ -2,7 +2,7 @@
 set -xe
 
 # Read configfile
-. ./$1
+. ../$1
 
 az storage account create  -g $RESOURCEGROUP_DATA -n $STORAGEACCOUNT_DATA_NAME --sku Standard_LRS
 az storage account create  -g $RESOURCEGROUP_DATA -n $STORAGEACCOUNT_FUNCTIONAPP_NAME --sku Standard_LRS
