@@ -7,8 +7,6 @@ env:
   DOTNET_VERSION: "3.1.100"
   FUNCION_APP_NAME: aksupdates-dev
   OUTPUT_PATH: "."
-  # toggle_SendNotification: "false"
-  # tableStorageName: "aksupdatesdev"
 
 jobs:
   build:
@@ -71,6 +69,15 @@ jobs:
           package: ${{ env.OUTPUT_PATH }}
 
       - name: Configure environment variables
+        env:          
+          tenantId: ${{ secrets.tenantId }}
+          subscriptionId: ${{ secrets.subscriptionId }}
+          applicationId: ${{ secrets.applicationId }}
+          servicePrincipalPassword: ${{ secrets.servicePrincipalPassword }}
+          twitterApiKey: ${{ secrets.twitterApiKey }}
+          twitterApiSecretKey: ${{ secrets.twitterApiSecretKey }}
+          twitterAccessToken: ${{ secrets.twitterAccessToken }}
+          twitterAccessTokenSecret: ${{ secrets.twitterAccessTokenSecret }}
         run: |  
           pushd ${{ env.OUTPUT_PATH }}/infra/configuration  
           chmod +x ./configuration.sh
