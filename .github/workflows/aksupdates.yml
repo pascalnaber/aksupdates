@@ -26,13 +26,16 @@ jobs:
         mkdir ${{ env.OUTPUT_PATH }}
         pushd ./src
         dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
+        ls -a ${{ env.OUTPUT_PATH }}
         popd 
+        echo "after popd"
+        ls -a ${{ env.OUTPUT_PATH }}
 
     - name: Copy Azure Function Package to artifacts
       uses: actions/upload-artifact@v1
       with:
         name: functions
-        path: ${{ env.OUTPUT_PATH }}
+        path: ./src/${{ env.OUTPUT_PATH }}
     
     - name: Copy infra to artifacts
       uses: actions/upload-artifact@v1
