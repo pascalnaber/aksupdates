@@ -23,13 +23,10 @@ jobs:
     
     - name: Publish Azure Function project
       run: |
-        mkdir ${{ env.OUTPUT_PATH }}
+        # mkdir ${{ env.OUTPUT_PATH }}
         pushd ./src
         dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
-        ls -a ${{ env.OUTPUT_PATH }}
         popd 
-        echo "after popd"
-        ls -a ${{ env.OUTPUT_PATH }}
 
     - name: Copy Azure Function Package to artifacts
       uses: actions/upload-artifact@v1
@@ -43,48 +40,48 @@ jobs:
         name: infra
         path: ./infra
         
-  # deploy:
-  #   name: Release to Azure
-  #   runs-on: ubuntu-latest
-  #   needs: [build]
-  #   steps:
-  #     - name: Download Azure Function Package artifacts
-  #       uses: actions/download-artifact@v1
-  #       with:
-  #         name: functions
-  #         path: ${{ env.OUTPUT_PATH }}
+  deploy:
+    name: Release to Azure
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Download Azure Function Package artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: functions
+          path: ${{ env.OUTPUT_PATH }}
 
-  #     - name: Download infra artifacts
-  #       uses: actions/download-artifact@v1
-  #       with:
-  #         name: infra
-  #         path: ${{ env.OUTPUT_PATH }}
+      - name: Download infra artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: infra
+          path: ${{ env.OUTPUT_PATH }}
 
-  #     - name: "Login via Azure CLI"
-  #       uses: azure/login@v1
-  #       with:
-  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: "Login via Azure CLI"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
           
-  #     - name: 'Publish Azure Functions'
-  #       uses: Azure/functions-action@v1
-  #       id: fa
-  #       with:
-  #         app-name: ${{ env.FUNCION_APP_NAME }}       
-  #         package: ${{ env.OUTPUT_PATH }}
+      - name: 'Publish Azure Functions'
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: ${{ env.FUNCION_APP_NAME }}       
+          package: ${{ env.OUTPUT_PATH }}
 
-  #     - name: Configure environment variables
-  #       env:          
-  #         tenantId: ${{ secrets.tenantId }}
-  #         subscriptionId: ${{ secrets.subscriptionId }}
-  #         applicationId: ${{ secrets.applicationId }}
-  #         servicePrincipalPassword: ${{ secrets.servicePrincipalPassword }}
-  #         twitterApiKey: ${{ secrets.twitterApiKey }}
-  #         twitterApiSecretKey: ${{ secrets.twitterApiSecretKey }}
-  #         twitterAccessToken: ${{ secrets.twitterAccessToken }}
-  #         twitterAccessTokenSecret: ${{ secrets.twitterAccessTokenSecret }}
-  #       run: |  
-  #         pushd ${{ env.OUTPUT_PATH }}/infra/configuration  
-  #         chmod +x ./configuration.sh
-  #         ./configuration.sh aksupdates-dev.config
-  #         popd
+      - name: Configure environment variables
+        env:          
+          tenantId: ${{ secrets.tenantId }}
+          subscriptionId: ${{ secrets.subscriptionId }}
+          applicationId: ${{ secrets.applicationId }}
+          servicePrincipalPassword: ${{ secrets.servicePrincipalPassword }}
+          twitterApiKey: ${{ secrets.twitterApiKey }}
+          twitterApiSecretKey: ${{ secrets.twitterApiSecretKey }}
+          twitterAccessToken: ${{ secrets.twitterAccessToken }}
+          twitterAccessTokenSecret: ${{ secrets.twitterAccessTokenSecret }}
+        run: |  
+          pushd ${{ env.OUTPUT_PATH }}/infra/configuration  
+          chmod +x ./configuration.sh
+          ./configuration.sh aksupdates-dev.config
+          popd
          
