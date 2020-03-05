@@ -80,7 +80,7 @@ jobs:
           twitterAccessToken: ${{ secrets.twitterAccessToken }}
           twitterAccessTokenSecret: ${{ secrets.twitterAccessTokenSecret }}
         run: |  
-          pushd ${{ env.OUTPUT_PATH }}/infra/configuration  
+          pushd ./infra/configuration  
           chmod +x ./configuration.sh
           ./configuration.sh aksupdates-dev.config
           popd
