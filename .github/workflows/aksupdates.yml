@@ -23,6 +23,7 @@ jobs:
     
     - name: Publish Azure Function project
       run: |
+        mkdir ${{ env.OUTPUT_PATH }}
         pushd ./src
         dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
         popd 
