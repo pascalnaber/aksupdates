@@ -29,15 +29,21 @@ jobs:
         dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
         popd 
     
-    - name: Copy infra files to artifacts
-      run: |        
-        cp -a ./infra/. ${{ env.OUTPUT_PATH }}
+    # - name: Copy infra files to artifacts
+    #   run: |        
+    #     cp -a ./infra/. ${{ env.OUTPUT_PATH }}
 
-    - name: Package functions
+    - name: Copy Azure Function Package to artifacts
       uses: actions/upload-artifact@v1
       with:
         name: functions
         path: ${{ env.OUTPUT_PATH }}
+    
+    - name: Copy infra to artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: infra
+        path: ./infra
         
   deploy:
     name: Release to Azure
