@@ -31,7 +31,7 @@ jobs:
     
     - name: Copy infra files to artifacts
       run: |        
-        cp -a /infra/. /${{ env.OUTPUT_PATH }}/       
+        cp -a ./infra/. /${{ env.OUTPUT_PATH }}/       
 
     - name: Package functions
       uses: actions/upload-artifact@v1
