@@ -77,7 +77,7 @@ jobs:
         run: |            
           pushd ./infra/provisioning  
           chmod +x ./provisioning.sh
-          ./provisioning.sh {{ env.ENVIRONMENT }}
+          ./provisioning.sh ${{ env.ENVIRONMENT }}
           popd
 
       - name: 'Publish Azure Functions'
@@ -100,6 +100,6 @@ jobs:
         run: |            
           pushd ./infra/configuration  
           chmod +x ./configuration.sh
-          ./configuration.sh {{ env.ENVIRONMENT }}
+          ./configuration.sh ${{ env.ENVIRONMENT }}
           popd
          
