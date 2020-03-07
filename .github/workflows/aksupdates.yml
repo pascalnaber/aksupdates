@@ -74,9 +74,8 @@ jobs:
           echo "::set-env name=ENVIRONMENT::aksupdates-dev.config"
 
       - name: Provision resources        
-        run: |  
-          ls -a
-          pushd ./infra/provision  
+        run: |            
+          pushd ./infra/provisioning  
           chmod +x ./provision.sh
           ./provision.sh {{ env.ENVIRONMENT }}
           popd
@@ -98,8 +97,7 @@ jobs:
           twitterApiSecretKey: ${{ secrets.twitterApiSecretKey }}
           twitterAccessToken: ${{ secrets.twitterAccessToken }}
           twitterAccessTokenSecret: ${{ secrets.twitterAccessTokenSecret }}
-        run: |  
-          ls -a
+        run: |            
           pushd ./infra/configuration  
           chmod +x ./configuration.sh
           ./configuration.sh {{ env.ENVIRONMENT }}
