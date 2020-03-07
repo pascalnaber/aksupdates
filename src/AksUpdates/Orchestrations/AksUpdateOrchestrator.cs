@@ -35,7 +35,7 @@ namespace AksUpdates.Orchestrations
                 var storedLatestVersionPerLocation = await this.azureTableStorage.GetStoredLatestVersions(notificationType.NotificationTypeKey);
                 await VerifyAksVersionChanges(supportedLocations, storedLatestVersionPerLocation, notificationType);
             }
-
+            
             log.LogInformation($"Orchestration finished {nameof(AksUpdateOrchestrator)}");
         }
 
