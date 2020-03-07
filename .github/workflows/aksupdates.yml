@@ -75,6 +75,7 @@ jobs:
 
       - name: Provision resources        
         run: |  
+          ls -a
           pushd ./infra/provision  
           chmod +x ./provision.sh
           ./provision.sh {{ env.ENVIRONMENT }}
@@ -98,6 +99,7 @@ jobs:
           twitterAccessToken: ${{ secrets.twitterAccessToken }}
           twitterAccessTokenSecret: ${{ secrets.twitterAccessTokenSecret }}
         run: |  
+          ls -a
           pushd ./infra/configuration  
           chmod +x ./configuration.sh
           ./configuration.sh {{ env.ENVIRONMENT }}
