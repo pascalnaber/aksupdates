@@ -76,8 +76,8 @@ jobs:
       - name: Provision resources        
         run: |            
           pushd ./infra/provisioning  
-          chmod +x ./provision.sh
-          ./provision.sh {{ env.ENVIRONMENT }}
+          chmod +x ./provisioning.sh
+          ./provisioning.sh {{ env.ENVIRONMENT }}
           popd
 
       - name: 'Publish Azure Functions'
