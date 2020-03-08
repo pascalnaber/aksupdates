@@ -22,9 +22,14 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
     
+    - name: Run unittests
+      run: |        
+        pushd ./src
+        dotnet test --configuration Release
+        popd 
+
     - name: Publish Azure Function project
-      run: |
-        # mkdir ${{ env.OUTPUT_PATH }}
+      run: |        
         pushd ./src
         dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
         popd 

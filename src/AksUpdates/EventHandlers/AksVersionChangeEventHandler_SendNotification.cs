@@ -26,22 +26,18 @@ namespace AksUpdates.EventHandlers
         public Task Handle(AksNewVersionAvailableEvent notification, CancellationToken cancellationToken)
         {
             string tweet = BuildTweetMessage(notification);
-            if (Toggles.SendNotification)
-                twitterApi.PostTweet(new TweetMessage(tweet));
-            else
-                logger.LogInformation($"Toggle triggered: would have send tweet: {tweet}");
-
+            
+            twitterApi.PostTweet(new TweetMessage(tweet));
+            
             return Task.CompletedTask;
         }
 
         public Task Handle(AksNewLocationAvailableEvent notification, CancellationToken cancellationToken)
         {
             string tweet = BuildTweetMessage(notification);
-            if (Toggles.SendNotification)
-                twitterApi.PostTweet(new TweetMessage(tweet));
-            else
-                logger.LogInformation($"Toggle triggered: would have send tweet: {tweet}");
-
+            
+            twitterApi.PostTweet(new TweetMessage(tweet));
+            
             return Task.CompletedTask;
         }
 

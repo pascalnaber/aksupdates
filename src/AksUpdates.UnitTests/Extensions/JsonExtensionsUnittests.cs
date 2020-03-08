@@ -41,7 +41,7 @@ namespace AksUpdates.UnitTests.Extensions
        
 
         [Fact]
-        public void Should_GetLocationsWhereK8sIsSupportedFromJson2()
+        public void Should_GetLocationsWhereK8sIsSupportedFromJson()
         {
             string json = File.ReadAllText("get-provider-containerservice.json");
 

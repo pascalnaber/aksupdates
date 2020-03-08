@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using Xunit;
 
-namespace AksUpdates.UnitTests
+namespace AksUpdates.UnitTests.Orchestrations
 {
     public class UnitTests
     {
