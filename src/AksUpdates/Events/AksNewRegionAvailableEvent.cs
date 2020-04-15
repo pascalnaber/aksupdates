@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AksUpdates.Events
 {
-    public class AksNewLocationAvailableEvent : AksNewVersionAvailableEvent
+    public class AksNewRegionAvailableEvent : AksNewVersionAvailableEvent
     { 
     
     }

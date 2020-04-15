@@ -1,36 +1,26 @@
-using System;
-using System.Threading.Tasks;
 using AksUpdates.Orchestrations;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.DurableTask;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace AksUpdates
 {
     public class TimerTriggeredAksUpdatesFunction
     {
-        //[FunctionName(nameof(TimerTriggeredAksUpdatesFunction))]
-        //public async Task Run([TimerTrigger("0 0 */1 * * *", RunOnStartup = true)]
-        //    TimerInfo myTimer, 
-        //    [DurableClient] IDurableOrchestrationClient client, 
-        //    ILogger logger)
-        //{
-        //    await client.StartNewAsync(nameof(AksUpdateOrchestrator), null);
-        //}
+        private readonly IAksUpdateOrchestrator _orchestrator;
+        private readonly ILogger<TimerTriggeredAksUpdatesFunction> _logger;
 
-        private readonly IAksUpdateOrchestrator orchestrator;
-        public TimerTriggeredAksUpdatesFunction(IAksUpdateOrchestrator orchestrator)
+        public TimerTriggeredAksUpdatesFunction(IAksUpdateOrchestrator orchestrator, ILogger<TimerTriggeredAksUpdatesFunction> logger)
         {
-            this.orchestrator = orchestrator;
+            this._orchestrator = orchestrator;
+            this._logger = logger;
         }
 
         [FunctionName(nameof(TimerTriggeredAksUpdatesFunction))]
         public async Task Run([TimerTrigger("0 0 */1 * * *", RunOnStartup = true)]
-            TimerInfo myTimer,            
-            ILogger logger)
+            TimerInfo myTimer)
         {
-            await orchestrator.Run(logger);
+            await _orchestrator.Run();
         }
     }
 }

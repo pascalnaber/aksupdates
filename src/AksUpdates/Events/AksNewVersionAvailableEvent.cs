@@ -8,9 +8,9 @@ namespace AksUpdates.Events
     {
         public NotificationType NotificationType { get; set; }
 
-        public string LocationKey { get; set; }
+        public string RegionKey { get; set; }
 
-        public string Location { get; set; }
+        public string Region { get; set; }
 
         public Version LatestVersion { get; set; }
 

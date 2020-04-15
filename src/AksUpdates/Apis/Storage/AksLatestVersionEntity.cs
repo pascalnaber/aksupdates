@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Table;
 
-namespace AksUpdates.Storage
+namespace AksUpdates.Apis.Storage
 {
     public class AksLatestVersionEntity : TableEntity
     {

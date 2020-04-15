@@ -1,12 +1,10 @@
-﻿using AksUpdates.Models;
-using Microsoft.WindowsAzure.Storage;
+﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace AksUpdates.Storage
+namespace AksUpdates.Apis.Storage
 {
     public class AzureTableStorage : IAzureTableStorage
     {

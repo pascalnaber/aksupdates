@@ -4,8 +4,8 @@ namespace AksUpdates.Apis.Azure
 {
     public interface IAzureApi
     {
-        Task<string> GetAksLocations();
+        Task<string> GetAksRegions();
 
-        Task<string> GetAksVersionsByLocation(string location);
+        Task<string> GetAksVersionsByRegion(string location);
     }
 }

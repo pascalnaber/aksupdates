@@ -57,7 +57,7 @@ namespace AksUpdates.Apis.Azure
             return authorizationToken;
         }
 
-        public async Task<string> GetAksLocations()
+        public async Task<string> GetAksRegions()
         {
             string token = await GetAuthorizationToken();
 
@@ -66,7 +66,7 @@ namespace AksUpdates.Apis.Azure
             return json;
         }
 
-        public async Task<string> GetAksVersionsByLocation(string location)
+        public async Task<string> GetAksVersionsByRegion(string location)
         {
             string token = await GetAuthorizationToken();
 

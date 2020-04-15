@@ -16,7 +16,7 @@ namespace AksUpdates.Apis.Twitter
 
         public void PostTweet(TweetMessage message)
         {
-            logger.LogInformation($"Dummy Tweet: would have send tweet: {message}");
+            logger.LogInformation($"Dummy Tweet: would have send tweet: {message.Tweet}");
         }
     }
 }

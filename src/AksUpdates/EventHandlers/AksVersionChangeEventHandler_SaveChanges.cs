@@ -1,5 +1,5 @@
 ﻿using AksUpdates.Events;
-using AksUpdates.Storage;
+using AksUpdates.Apis.Storage;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ namespace AksUpdates.EventHandlers
 {
     public class AksVersionChangeEventHandler_SaveChanges : 
         INotificationHandler<AksNewVersionAvailableEvent>,
-        INotificationHandler<AksNewLocationAvailableEvent>
+        INotificationHandler<AksNewRegionAvailableEvent>
     {        
         private readonly IAzureTableStorage azureTableStorage;
 
@@ -22,17 +22,17 @@ namespace AksUpdates.EventHandlers
             await SaveInStorage(notification);
         }
 
-        public async Task Handle(AksNewLocationAvailableEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(AksNewRegionAvailableEvent notification, CancellationToken cancellationToken)
         {
             await SaveInStorage(notification);
         }
 
         private async Task SaveInStorage(AksNewVersionAvailableEvent notification)
         {
-            await this.azureTableStorage.AddOrUpdateLatestVersion(notification.NotificationType.NotificationTypeKey, notification.LocationKey, notification.LatestVersion.ToString());
+            await this.azureTableStorage.AddOrUpdateLatestVersion(notification.NotificationType.NotificationTypeKey, notification.RegionKey, notification.LatestVersion.ToString());
             if (notification.NotificationType.IsPreview)
             {
-                await this.azureTableStorage.AddOrUpdateLatestVersion("akspreviewall", notification.LocationKey, notification.PreviewVersions);
+                await this.azureTableStorage.AddOrUpdateLatestVersion("akspreviewall", notification.RegionKey, notification.PreviewVersions);
             }
         }
     }

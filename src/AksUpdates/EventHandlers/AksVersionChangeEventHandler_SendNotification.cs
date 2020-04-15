@@ -11,7 +11,7 @@ namespace AksUpdates.EventHandlers
 {
     public class AksVersionChangeEventHandler_SendNotification : 
         INotificationHandler<AksNewVersionAvailableEvent>,
-        INotificationHandler<AksNewLocationAvailableEvent>
+        INotificationHandler<AksNewRegionAvailableEvent>
     {
         private const string hashTags = "#azure #aks #kubernetes";
         private readonly ITwitterApi twitterApi;
@@ -32,7 +32,7 @@ namespace AksUpdates.EventHandlers
             return Task.CompletedTask;
         }
 
-        public Task Handle(AksNewLocationAvailableEvent notification, CancellationToken cancellationToken)
+        public Task Handle(AksNewRegionAvailableEvent notification, CancellationToken cancellationToken)
         {
             string tweet = BuildTweetMessage(notification);
             
@@ -45,28 +45,30 @@ namespace AksUpdates.EventHandlers
         {
             if (notification.NotificationType.IsPreview)
             {
-                return $"Location {notification.Location} in Azure has a new preview version of AKS available: {notification.LatestVersion}" +
+                return $"Region {notification.Region} in Azure has a new preview version of AKS available: {notification.LatestVersion}" +
                     $"{Environment.NewLine}" +
                     $"Available preview versions: {notification.PreviewVersions}" +
                     $"{Environment.NewLine}" +
                     $"{hashTags}";
             }
             else
-                return $"Location {notification.Location} in Azure has a new version of AKS available: {notification.LatestVersion}" +
+                return $"Region {notification.Region} in Azure has a new version of AKS available: {notification.LatestVersion}" +
+                        $"{Environment.NewLine}" +
+                        $"Available preview versions: {notification.PreviewVersions}" +
                         $"{Environment.NewLine}" +
                         $"{hashTags}";
         }
 
-        public string BuildTweetMessage(AksNewLocationAvailableEvent notification)
+        public string BuildTweetMessage(AksNewRegionAvailableEvent notification)
         {
             if (notification.NotificationType.IsPreview)
-                return $"New location {notification.Location} available in Azure supporting AKS preview version {notification.LatestVersion}" +
+                return $"New region {notification.Region} available in Azure supporting AKS preview version {notification.LatestVersion}" +
                      $"{Environment.NewLine}" +
                      $"The following preview versions are available: {notification.PreviewVersions}" +
                      $"{Environment.NewLine}" +
                      $"{hashTags}";
             else
-                return $"New location {notification.Location} available in Azure supporting AKS version {notification.LatestVersion}" +
+                return $"New region {notification.Region} available in Azure supporting AKS version {notification.LatestVersion}" +
                      $"{Environment.NewLine}" +
                      $"{hashTags}";
         }
