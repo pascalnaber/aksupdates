@@ -35,13 +35,13 @@ jobs:
         popd 
 
     - name: Create zip
-      run: cd src/output; zip -r ../function.zip .
+      run: cd src/output;mkdir zip; zip -r ../zip/function.zip .
     
     - name: Copy Azure Function Package to artifacts
       uses: actions/upload-artifact@v1
       with:
         name: functions
-        path: ./src/${{ env.OUTPUT_PATH }}
+        path: ./src/${{ env.OUTPUT_PATH }}/zip
     
     - name: Copy infra to artifacts
       uses: actions/upload-artifact@v1
@@ -106,8 +106,8 @@ jobs:
           twitterAccessToken: ${{ secrets.twitterAccessToken }}
           twitterAccessTokenSecret: ${{ secrets.twitterAccessTokenSecret }}
         run: |            
-          pushd ./infra/configuration  
-          chmod +x ./configuration.sh
-          ./configuration.sh ${{ env.ENVIRONMENT }}
+          pushd ./infra/deploy  
+          chmod +x ./deploy.sh
+          ./deploy.sh ${{ env.ENVIRONMENT }}
           popd
          
