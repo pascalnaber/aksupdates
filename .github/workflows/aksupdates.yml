@@ -35,7 +35,7 @@ jobs:
         popd 
 
     - name: Create zip
-      run: cd src/output;mkdir zip; zip -r ../zip/function.zip .
+      run: cd src/output;mkdir zip; zip -r ./zip/function.zip .
     
     - name: Copy Azure Function Package to artifacts
       uses: actions/upload-artifact@v1
