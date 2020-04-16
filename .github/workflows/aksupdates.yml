@@ -105,7 +105,7 @@ jobs:
           twitterApiSecretKey: ${{ secrets.twitterApiSecretKey }}
           twitterAccessToken: ${{ secrets.twitterAccessToken }}
           twitterAccessTokenSecret: ${{ secrets.twitterAccessTokenSecret }}
-          ZIPPATH: ${{ github.workspace }}/functions/function.zip
+          ZIPPATH: ${{ github.workspace }}/${{ env.OUTPUT_PATH }}/function.zip
         run: |            
           pushd ./infra/deploy  
           chmod +x ./deploy.sh
