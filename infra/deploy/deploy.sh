@@ -6,6 +6,8 @@ set -e
 
 az account set --subscription $SUBSCRIPTION_ID
 
+az functionapp deployment source config-zip -g $RESOURCEGROUP_FUNCTIONAPP -n $FUNCTIONAPP_NAME --src 'output/function.zip'
+
 STORAGEACCOUNT_DATA_CONNECTIONSTRING=$(az storage account show-connection-string -n $STORAGEACCOUNT_DATA_NAME -g $RESOURCEGROUP_DATA --query connectionString -o tsv)
 
 az functionapp config appsettings set -n $FUNCTIONAPP_NAME  -g $RESOURCEGROUP_FUNCTIONAPP --settings \

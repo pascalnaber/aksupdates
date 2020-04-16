@@ -34,6 +34,9 @@ jobs:
         dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
         popd 
 
+    - name: Create zip
+      run: cd src/output; zip -r ../function.zip .
+    
     - name: Copy Azure Function Package to artifacts
       uses: actions/upload-artifact@v1
       with:
@@ -85,14 +88,14 @@ jobs:
           ./provisioning.sh ${{ env.ENVIRONMENT }}
           popd
 
-      - name: 'Publish Azure Functions'
-        uses: Azure/functions-action@v1
-        id: fa
-        with:
-          app-name: ${{ env.FUNCION_APP_NAME }}       
-          package: ${{ env.OUTPUT_PATH }}
+      # - name: 'Publish Azure Functions'
+        # uses: Azure/functions-action@v1
+        # id: fa
+        # with:
+          # app-name: ${{ env.FUNCION_APP_NAME }}       
+          # package: ${{ env.OUTPUT_PATH }}
 
-      - name: Configure environment
+      - name: Deploy & Configure environment
         env:          
           tenantId: ${{ secrets.tenantId }}
           subscriptionId: ${{ secrets.subscriptionId }}
