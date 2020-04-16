@@ -4,6 +4,8 @@ set -e
 # Read configfile
 . ../$1
 
+az account set --subscription $SUBSCRIPTION_ID
+
 STORAGEACCOUNT_DATA_CONNECTIONSTRING=$(az storage account show-connection-string -n $STORAGEACCOUNT_DATA_NAME -g $RESOURCEGROUP_DATA --query connectionString -o tsv)
 
 az functionapp config appsettings set -n $FUNCTIONAPP_NAME  -g $RESOURCEGROUP_FUNCTIONAPP --settings \
@@ -18,4 +20,3 @@ az functionapp config appsettings set -n $FUNCTIONAPP_NAME  -g $RESOURCEGROUP_FU
     "twitterAccessToken=$twitterAccessToken" \
     "twitterAccessTokenSecret=$twitterAccessTokenSecret" \
     "toggle_SendNotification=$TOGGLE_SENDNOTIFICATIONS" &>/dev/null
-
