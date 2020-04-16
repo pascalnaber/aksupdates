@@ -5,7 +5,7 @@ set -xe
 . ../$1
 
 az account set --subscription $SUBSCRIPTION_ID
-
+ 
 az storage account create  -g $RESOURCEGROUP_DATA -n $STORAGEACCOUNT_DATA_NAME --sku Standard_LRS
 az storage account create  -g $RESOURCEGROUP_DATA -n $STORAGEACCOUNT_FUNCTIONAPP_NAME --sku Standard_LRS
 
