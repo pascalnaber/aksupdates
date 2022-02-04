@@ -30,7 +30,7 @@ namespace AksUpdates.Orchestrations
         {            
             _logger.LogInformation($"Orchestration triggered {nameof(AksUpdateOrchestrator)}");
 
-            var supportedRegions = (await this.azureApi.GetAksRegions()).GetLocationsOfferingAks();
+            var supportedRegions = (await this.azureApi.GetAksRegions()).GetLocationsOfferingAks().ButNot(new [] {"Korea South" });
 
             foreach (var notificationType in NotificationType.NotificationTypes)
             {
@@ -55,20 +55,20 @@ namespace AksUpdates.Orchestrations
 
             var json = await this.azureApi.GetAksVersionsByRegion(regionKey);
             Version latestVersion = json.GetLatestVersion(notificationType.IsPreview);
-            string allPreviewVersions = String.Join(", ", json.GetAllPreviewVersions());
+            //string allPreviewVersions = String.Join(", ", json.GetAllPreviewVersions());
 
             if (storedLatestVersionsPerLocation.ContainsKey(regionKey))
             {
                 if (latestVersion > storedLatestVersionsPerLocation[regionKey])
                 {
                     this._logger?.LogInformation($"New version {latestVersion} available for region {regionKey}");
-                    await this.mediator.Publish(new AksNewVersionAvailableEvent() { NotificationType = notificationType, RegionKey = regionKey, Region = supportedLocation, LatestVersion = latestVersion, PreviewVersions = allPreviewVersions });
+                    await this.mediator.Publish(new AksNewVersionAvailableEvent() { NotificationType = notificationType, RegionKey = regionKey, Region = supportedLocation, LatestVersion = latestVersion });
                 }
             }
             else
             {
                 this._logger?.LogInformation($"New region available for version {latestVersion}");
-                await this.mediator.Publish(new AksNewRegionAvailableEvent() { NotificationType = notificationType, RegionKey = regionKey, Region = supportedLocation, LatestVersion = latestVersion, PreviewVersions = allPreviewVersions });
+                await this.mediator.Publish(new AksNewRegionAvailableEvent() { NotificationType = notificationType, RegionKey = regionKey, Region = supportedLocation, LatestVersion = latestVersion });
             }
         }
     }

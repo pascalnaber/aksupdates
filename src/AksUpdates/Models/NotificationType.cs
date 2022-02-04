@@ -25,7 +25,7 @@ namespace AksUpdates.Models
 
         public static NotificationType[] NotificationTypes
         {
-            get { return new NotificationType[] { new NotificationType(AksPreview), new NotificationType(Aks) }; }
+            get { return new NotificationType[] { new NotificationType(Aks) }; }
         }
     }
 }

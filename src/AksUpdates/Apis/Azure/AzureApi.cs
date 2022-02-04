@@ -70,8 +70,12 @@ namespace AksUpdates.Apis.Azure
         {
             string token = await GetAuthorizationToken();
 
-            var aksVersionsUri = $"https://management.azure.com/subscriptions/{this.subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/orchestrators?api-version=2019-04-01&resource-type=managedClusters";
+            var aksVersionsUri = $"https://management.azure.com/subscriptions/{this.subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/orchestrators?api-version=2021-10-01&resource-type=managedClusters";
             var json = await ExecuteGetOnAzureApi(aksVersionsUri, token);
+
+            if (json.Contains("error"))
+                throw new Exception("Exception occured while fetching AKS information on Azure", new Exception(json));
+
             return json;
         }
 

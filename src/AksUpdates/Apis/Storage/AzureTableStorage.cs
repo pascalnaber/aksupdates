@@ -29,6 +29,29 @@ namespace AksUpdates.Apis.Storage
             return locations;
         }
 
+        //public async Task<IDictionary<string, Version>> GetAllData()
+        //{
+        //    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Settings.GetSetting(Settings.TableStorageConnectionString));
+        //    CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+        //    CloudTable table = tableClient.GetTableReference(Settings.GetSetting(Settings.TableStorageName));
+
+        //    await table.CreateIfNotExistsAsync();
+        //    //TableQuery<AksLatestVersionEntity> query = new TableQuery<AksLatestVersionEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, key));
+
+        //    //TableContinuationToken continuationToken = null;
+        //    //TableQuerySegment<AksLatestVersionEntity> tableQueryResult = await table.ExecuteQuerySegmentedAsync(query, continuationToken);
+
+        //    //var locations = new Dictionary<string, Version>();
+
+        //    var entities = await table.ExecuteQuerySegmentedAsync(new TableQuery<AksLatestVersionEntity>(), null).ToList();
+
+        //    foreach (AksLatestVersionEntity entity in tableQueryResult)
+        //    {
+        //        locations.Add(entity.RowKey, new Version(entity.LatestVersion));
+        //    }
+        //    return locations;
+        //}
+
         public async Task AddOrUpdateLatestVersion(string storagePartitionKey, string location, string latestVersion)
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Settings.GetSetting(Settings.TableStorageConnectionString));
