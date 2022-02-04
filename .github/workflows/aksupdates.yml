@@ -73,12 +73,12 @@ jobs:
       - name: Set env to production
         if: endsWith(github.ref, '/release')
         run: |
-          echo "::set-env name=ENVIRONMENT::aksupdates-prod.config"
+          echo "ENVIRONMENT=aksupdates-prod.config" >> $GITHUB_ENV
 
       - name: Set env to development
         if: endsWith(github.ref, '/master')
         run: |
-          echo "::set-env name=ENVIRONMENT::aksupdates-dev.config"
+          echo "ENVIRONMENT=aksupdates-dev.config" >> $GITHUB_ENV
 
       - name: Provision resources        
         run: |            
