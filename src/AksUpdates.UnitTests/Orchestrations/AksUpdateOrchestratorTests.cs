@@ -45,8 +45,7 @@ namespace AksUpdates.UnitTests.Orchestrations
                      arg.LatestVersion == new Version(latestVersion) &&
                      arg.Region == supportedLocation &&
                      arg.RegionKey == supportedLocationShort &&
-                     arg.NotificationType == notificationType &&
-                     arg.PreviewVersions == previewVersions),                
+                     arg.NotificationType == notificationType),                
                 default(CancellationToken)));
 
             // Act
@@ -82,8 +81,7 @@ namespace AksUpdates.UnitTests.Orchestrations
                      arg.LatestVersion == new Version(latestVersion) &&
                      arg.Region == supportedLocation &&
                      arg.RegionKey == supportedLocationShort &&
-                     arg.NotificationType == notificationType &&
-                     arg.PreviewVersions == previewVersions),
+                     arg.NotificationType == notificationType),
                 default(CancellationToken)));            
 
             // Act
