@@ -8,6 +8,6 @@ namespace AksUpdates.Apis.Storage
     public interface IAzureTableStorage
     {
         Task<IDictionary<string, Version>> GetStoredLatestVersions(string key);
-        Task AddOrUpdateLatestVersion(string storagePartitionKey, string location, string latestVersion);
+        Task AddOrUpdateLatestVersion(AksVersion aksVersion);
     }
 }

@@ -29,7 +29,8 @@ namespace AksUpdates.EventHandlers
 
         private async Task SaveInStorage(AksNewVersionAvailableEvent notification)
         {
-            await this.azureTableStorage.AddOrUpdateLatestVersion(notification.NotificationType.NotificationTypeKey, notification.RegionKey, notification.LatestVersion.ToString());
+            await this.azureTableStorage.AddOrUpdateLatestVersion(new AksVersion(notification.NotificationType.NotificationTypeKey, notification.RegionKey, notification.LatestVersion, notification.Region, System.DateTime.UtcNow));
+            
             //if (notification.NotificationType.IsPreview)
             //{
             //    await this.azureTableStorage.AddOrUpdateLatestVersion("akspreviewall", notification.RegionKey, notification.PreviewVersions);

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<AksUpdates.Apis.Storage.AksVersion>
+@{
+    ViewData["Title"] = "AKS latest version";
+}
+<style>
+table, th, td {
+  /*border: 1px solid black;  */
+}
+table {
+  width: 50%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;  
+  border-bottom: 1px solid #ddd;
+}
+th {
+  height: 70px;
+  text-align: left;
+}
+td {
+  text-align: left;
+}
+</style>
+<div class="text-center">
+    <h1 class="display-4">Latest version of Azure Kubernetes Service (AKS)</h1>
+    <p></p>
+    <p>Subscribe to <a href="https://twitter.com/azureaksupdates">https://twitter.com/azureaksupdates</a>  to receive notifications for new AKS versions.</p>
+    <p>At your service, by Microsoft Azure MVP <a href="https://www.linkedin.com/in/pascalnaber/">Pascal Naber</a> .</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Region</th>
+                <th>Version</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => i.Region)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => i.Version)
+                    </td>
+                </tr>
+            }
+        </tbody>        
+    </table>
+</div>

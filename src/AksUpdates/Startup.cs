@@ -7,6 +7,7 @@ using AksUpdates.Orchestrations;
 using AksUpdates.Apis.Azure;
 using AksUpdates.Apis.Twitter;
 using AksUpdates.Models;
+using Microsoft.Extensions.Configuration;
 
 [assembly: FunctionsStartup(typeof(AksUpdates.Startup))]
 namespace AksUpdates
@@ -22,6 +23,12 @@ namespace AksUpdates
                 builder.Services.AddScoped<ITwitterApi, TwitterApi>();
             else
                 builder.Services.AddScoped<ITwitterApi, DummyTwitterApi>();
+
+            builder.Services.AddOptions<AzureTableStorageConfiguration>()
+                .Configure<IConfiguration>((settings, configuration) =>
+                {
+                    configuration.GetSection("azureTableStorageConfiguration").Bind(settings);
+                });
 
             builder.Services.AddScoped<IAksUpdateOrchestrator, AksUpdateOrchestrator>();
             builder.Services.AddScoped<IAzureApi, AzureApi>();            

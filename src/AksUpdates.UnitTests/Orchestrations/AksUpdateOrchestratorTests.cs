@@ -33,7 +33,7 @@ namespace AksUpdates.UnitTests.Orchestrations
             string supportedLocation = "West Europe";
             string supportedLocationShort = supportedLocation.Replace(" ", "").ToLower();
             var notificationType = new NotificationType(NotificationType.Aks);
-            string previewVersions = "1.16.1, 1.16.4, 1.17.0";
+            //string previewVersions = "1.16.1, 1.16.4, 1.17.0";
             Dictionary<string, Version> storedlatestversionsPerLocation = new Dictionary<string, Version>();
             List<string> storedRegions = new List<string>() { "" };
 
@@ -71,7 +71,7 @@ namespace AksUpdates.UnitTests.Orchestrations
             string supportedLocation = "West Europe";
             string supportedLocationShort = supportedLocation.Replace(" ", "").ToLower();
             var notificationType = new NotificationType(NotificationType.Aks);
-            string previewVersions = "1.16.1, 1.16.4, 1.17.0";
+            //string previewVersions = "1.16.1, 1.16.4, 1.17.0";
             Dictionary<string, Version> storedlatestversionsPerLocation = new Dictionary<string, Version>() { { supportedLocationShort, new Version("1.14.6") } } ;
 
             azureApiMock.Setup(x => x.GetAksVersionsByRegion(It.IsAny<string>())).ReturnsAsync(File.ReadAllText("get-versions-result-2019-04-01.json"));
