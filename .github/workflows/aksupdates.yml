@@ -60,8 +60,7 @@ jobs:
     #     inlineScript: |
     #       az acr login -n aksupdates
 
-    - name: Build Docker Image and Push
-      working-directory: scripts
+    - name: Build Docker Image and Push      
       run : |
         docker build -f ./src/AksUpdates.WebUI/Dockerfile -t aksupdates.azurecr.io/aksupdates.webui:{{ github.sha }} ./src
         docker push aksupdates.azurecr.io/aksupdates.webui:{{ github.sha }}
