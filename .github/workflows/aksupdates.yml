@@ -54,16 +54,27 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Get token for Docker
+      id: get-token
       uses: azure/CLI@v1
       with:
         azcliversion: 2.30.0
         inlineScript: |
           TOKEN=$(az acr login -n aksupdates --expose-token)
+          echo "::set-output name=TOKEN::$(TOKEN)"
+
+    # - name: 'Build and push image'
+    #       uses: azure/docker-login@v1
+    #       with:
+    #         login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+    #         username: 00000000-0000-0000-0000-000000000000
+    #         password: ${{ secrets.REGISTRY_PASSWORD }}
+    #     - run: |
+            
 
     - name: Build Docker Image and Push      
       run : |
-        echo "Token: " $TOKEN
-        echo $TOKEN | docker login --username 00000000-0000-0000-0000-000000000000 --password-stdin aksupdates.azurecr.io
+        echo "Token: " ${{ steps.get-token.outputs.TOKEN }}
+        echo ${{ steps.get-token.outputs.TOKEN }} | docker login --username 00000000-0000-0000-0000-000000000000 --password-stdin aksupdates.azurecr.io
         docker build -f ./src/AksUpdates.WebUI/Dockerfile -t aksupdates.azurecr.io/aksupdates.webui:${{ github.sha }} ./src
         docker push aksupdates.azurecr.io/aksupdates.webui:${{ github.sha }}
 
