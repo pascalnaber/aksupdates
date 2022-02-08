@@ -71,14 +71,13 @@ jobs:
     #     - run: |
             
 
-    - name: Build Docker Image and Push      
+    - name: Login, Build Docker Image and Push      
       run : |
-        echo "Token: " ${{ steps.get-token.outputs.TOKEN }}
-        docker login --username 00000000-0000-0000-0000-000000000000 --password ${{ steps.get-token.outputs.TOKEN }} aksupdates.azurecr.io        
+        echo ${{ steps.get-token.outputs.TOKEN }} | docker login --username 00000000-0000-0000-0000-000000000000 --password-stdin aksupdates.azurecr.io        
         docker build -f ./src/AksUpdates.WebUI/Dockerfile -t aksupdates.azurecr.io/aksupdates.webui:${{ github.sha }} ./src
         docker push aksupdates.azurecr.io/aksupdates.webui:${{ github.sha }}
     
-    #echo ${{ steps.get-token.outputs.TOKEN }} | docker login --username 00000000-0000-0000-0000-000000000000 --password-stdin aksupdates.azurecr.io
+    #docker login --username 00000000-0000-0000-0000-000000000000 --password ${{ steps.get-token.outputs.TOKEN }} aksupdates.azurecr.io        
     # - name: Build image and push to ACR
     #   uses: docker/build-push-action@v2
     #   with:
