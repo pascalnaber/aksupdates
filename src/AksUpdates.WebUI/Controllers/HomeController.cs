@@ -1,4 +1,4 @@
-﻿using AksUpdates.Apis.Storage;
+﻿using AksUpdates.Api.Storage;
 using AksUpdates.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

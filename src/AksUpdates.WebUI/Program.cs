@@ -1,4 +1,4 @@
-using AksUpdates.Apis.Storage;
+using AksUpdates.Api.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 

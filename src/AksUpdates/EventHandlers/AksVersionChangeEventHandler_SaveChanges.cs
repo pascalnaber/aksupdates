@@ -1,5 +1,5 @@
 ﻿using AksUpdates.Events;
-using AksUpdates.Apis.Storage;
+using AksUpdates.Api.Storage;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

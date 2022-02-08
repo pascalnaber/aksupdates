@@ -3,7 +3,7 @@ using AksUpdates.Events;
 using AksUpdates.Models;
 using AksUpdates.Models.AksVersionsPerLocation;
 using AksUpdates.Orchestrations;
-using AksUpdates.Apis.Storage;
+using AksUpdates.Api.Storage;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;

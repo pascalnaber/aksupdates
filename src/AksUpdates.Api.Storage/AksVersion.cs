@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AksUpdates.Apis.Storage
+namespace AksUpdates.Api.Storage
 {
     public class AksVersion
     {

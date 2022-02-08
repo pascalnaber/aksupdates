@@ -47,6 +47,36 @@ jobs:
       with:
         name: infra
         path: ./infra
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    - name: Login to ACR
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          az acr login -n aksupdates
+
+    - name: Build Docker Image and Push
+      working-directory: scripts
+      run : |
+        docker build -f ./src/AksUpdates.WebUI/Dockerfile -t aksupdates.azurecr.io/aksupdates.webui:{{ github.sha }} ./src
+        docker push aksupdates.azurecr.io/aksupdates.webui:{{ github.sha }}
+
+    # - name: Build image and push to ACR
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     # relative path to the place where source code with Dockerfile is located
+    #     context: ./src/AksUpdates.WebUI
+    #     # Note: tags has to be all lower-case
+    #     tags: |
+    #       aksupdates.azurecr.io/aksupdates.webui:latest 
+    #       aksupdates.azurecr.io/aksupdates.webui:${{ github.sha }}
+    #     # build on feature branches, push only on main branch
+    #     push: true
         
   deploy:
     name: Release to Azure

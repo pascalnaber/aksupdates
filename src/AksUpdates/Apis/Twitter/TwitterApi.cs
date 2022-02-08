@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Tweetinvi;
+//using Tweetinvi;
 using Tweetinvi.Models;
 
 namespace AksUpdates.Apis.Twitter
@@ -13,11 +15,14 @@ namespace AksUpdates.Apis.Twitter
         private readonly string accessToken = Settings.GetSetting(Settings.TwitterAccessToken); 
         private readonly string accessTokenSecret = Settings.GetSetting(Settings.TwitterAccessTokenSecret);
 
-        public void PostTweet(TweetMessage message)
+        public async Task PostTweet(TweetMessage message)
         {
-            var creds = new TwitterCredentials(consumerApiKey, consumerApiSecret, accessToken, accessTokenSecret);
+            var twitterClient = new TwitterClient(consumerApiKey, consumerApiSecret, accessToken, accessTokenSecret);
+            await twitterClient.Tweets.PublishTweetAsync(message.Tweet);
 
-            var tweet = Auth.ExecuteOperationWithCredentials(creds, () => Tweetinvi.Tweet.PublishTweet(message.Tweet));
+            //var creds = new TwitterCredentials(consumerApiKey, consumerApiSecret, accessToken, accessTokenSecret);
+            //Tweetinvi.
+            //var tweet = Tweetinvi.Auth.ExecuteOperationWithCredentials(creds, () => Tweetinvi.Tweet.PublishTweet(message.Tweet));
         }
     }
 }

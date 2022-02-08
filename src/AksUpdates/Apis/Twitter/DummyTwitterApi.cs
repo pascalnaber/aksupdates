@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AksUpdates.Apis.Twitter
 {
@@ -14,7 +15,7 @@ namespace AksUpdates.Apis.Twitter
             this.logger = logger;
         }
 
-        public void PostTweet(TweetMessage message)
+        public async Task PostTweet(TweetMessage message)
         {
             logger.LogInformation($"Dummy Tweet: would have send tweet: {message.Tweet}");
         }

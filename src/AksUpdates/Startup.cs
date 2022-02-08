@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using MediatR;
-using AksUpdates.Apis.Storage;
+using AksUpdates.Api.Storage;
 using AksUpdates.Orchestrations;
 using AksUpdates.Apis.Azure;
 using AksUpdates.Apis.Twitter;

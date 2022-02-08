@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AksUpdates.Apis.Storage
+namespace AksUpdates.Api.Storage
 {
     public interface IAzureTableReadStorage
     {

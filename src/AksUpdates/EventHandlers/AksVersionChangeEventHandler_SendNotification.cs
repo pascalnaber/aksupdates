@@ -23,22 +23,22 @@ namespace AksUpdates.EventHandlers
             this.logger = logger;
         }
 
-        public Task Handle(AksNewVersionAvailableEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(AksNewVersionAvailableEvent notification, CancellationToken cancellationToken)
         {
             string tweet = BuildTweetMessage(notification);
             
-            twitterApi.PostTweet(new TweetMessage(tweet));
+            await twitterApi.PostTweet(new TweetMessage(tweet));
             
-            return Task.CompletedTask;
+            //return Task.CompletedTask;
         }
 
-        public Task Handle(AksNewRegionAvailableEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(AksNewRegionAvailableEvent notification, CancellationToken cancellationToken)
         {
             string tweet = BuildTweetMessage(notification);
             
-            twitterApi.PostTweet(new TweetMessage(tweet));
+            await twitterApi.PostTweet(new TweetMessage(tweet));
             
-            return Task.CompletedTask;
+            //return Task.CompletedTask;
         }
 
         public string BuildTweetMessage(AksNewVersionAvailableEvent notification)
