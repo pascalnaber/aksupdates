@@ -53,12 +53,12 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Login to ACR
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.30.0
-        inlineScript: |
-          az acr login -n aksupdates
+    # - name: Login to ACR
+    #   uses: azure/CLI@v1
+    #   with:
+    #     azcliversion: 2.30.0
+    #     inlineScript: |
+    #       az acr login -n aksupdates
 
     - name: Build Docker Image and Push
       working-directory: scripts
