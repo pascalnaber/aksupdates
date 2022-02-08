@@ -53,12 +53,13 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # - name: Login to ACR
-    #   uses: azure/CLI@v1
-    #   with:
-    #     azcliversion: 2.30.0
-    #     inlineScript: |
-    #       az acr login -n aksupdates
+    - name: Login to ACR
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          TOKEN=$(az acr login -n aksupdates --expose-token)
+          echo $TOKEN | docker login --username 00000000-0000-0000-0000-000000000000 --password-stdin aksupdates.azurecr.io
 
     - name: Build Docker Image and Push      
       run : |
