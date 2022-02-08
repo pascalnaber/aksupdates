@@ -5,7 +5,7 @@ on:
       - release
 
 env:  
-  DOTNET_VERSION: "6.0.1"  
+  DOTNET_VERSION: "6.0.101"  
   OUTPUT_PATH: "output"
 
 jobs:
