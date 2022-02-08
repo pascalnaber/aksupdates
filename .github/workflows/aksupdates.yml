@@ -16,37 +16,37 @@ jobs:
     - name: "Checkout"
       uses: actions/checkout@v2          
       
-    - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+    # - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
+    #   uses: actions/setup-dotnet@v1
+    #   with:
+    #     dotnet-version: ${{ env.DOTNET_VERSION }}
     
-    - name: Run unittests
-      run: |        
-        pushd ./src
-        dotnet test --configuration Release
-        popd 
+    # - name: Run unittests
+    #   run: |        
+    #     pushd ./src
+    #     dotnet test --configuration Release
+    #     popd 
 
-    - name: Publish Azure Function project
-      run: |        
-        pushd ./src
-        dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
-        popd 
+    # - name: Publish Azure Function project
+    #   run: |        
+    #     pushd ./src
+    #     dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
+    #     popd 
 
-    - name: Create zip
-      run: cd src/output;mkdir zip; zip -r ./zip/function.zip .
+    # - name: Create zip
+    #   run: cd src/output;mkdir zip; zip -r ./zip/function.zip .
     
-    - name: Copy Azure Function Package to artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: functions
-        path: ./src/${{ env.OUTPUT_PATH }}/zip
+    # - name: Copy Azure Function Package to artifacts
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: functions
+    #     path: ./src/${{ env.OUTPUT_PATH }}/zip
     
-    - name: Copy infra to artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: infra
-        path: ./infra
+    # - name: Copy infra to artifacts
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: infra
+    #     path: ./infra
 
     - name: Azure Login
       uses: azure/login@v1
@@ -58,11 +58,11 @@ jobs:
       uses: azure/CLI@v1
       with:
         azcliversion: 2.30.0
-        inlineScript: |
-          TOKEN=$(az acr login -n aksupdates --expose-token --query accessToken -o tsv)
-          echo "::set-output name=TOKEN::$(TOKEN)"
+        inlineScript: |          
+          echo "::set-output name=TOKEN::$(az acr login -n aksupdates --expose-token --query accessToken -o tsv)"
 
-    # - name: 'Build and push image'
+    #TOKEN=$(az acr login -n aksupdates --expose-token --query accessToken -o tsv) 
+    #- name: 'Build and push image'
     #       uses: azure/docker-login@v1
     #       with:
     #         login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
