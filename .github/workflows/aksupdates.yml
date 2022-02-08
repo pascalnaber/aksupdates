@@ -5,7 +5,7 @@ on:
       - release
 
 env:  
-  DOTNET_VERSION: "3.1.100"  
+  DOTNET_VERSION: "6.0.1"  
   OUTPUT_PATH: "output"
 
 jobs:
@@ -52,7 +52,7 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
+
     - name: Login to ACR
       uses: azure/CLI@v1
       with:
