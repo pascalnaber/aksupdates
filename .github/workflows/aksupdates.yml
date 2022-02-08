@@ -62,8 +62,8 @@ jobs:
 
     - name: Build Docker Image and Push      
       run : |
-        docker build -f ./src/AksUpdates.WebUI/Dockerfile -t aksupdates.azurecr.io/aksupdates.webui:{{ github.sha }} ./src
-        docker push aksupdates.azurecr.io/aksupdates.webui:{{ github.sha }}
+        docker build -f ./src/AksUpdates.WebUI/Dockerfile -t aksupdates.azurecr.io/aksupdates.webui:${{ github.sha }} ./src
+        docker push aksupdates.azurecr.io/aksupdates.webui:${{ github.sha }}
 
     # - name: Build image and push to ACR
     #   uses: docker/build-push-action@v2
