@@ -101,19 +101,22 @@ jobs:
 
       - uses: azure/arm-deploy@v1
         with:
-          deploymentName: common${{ github.run_number }}          
+          scope: subscription
+          subscriptionId: ${{ secrets.subscriptionId }}          
           template: ./infra/bicep/common.bicep
           parameters: common.parameters.json
 
       - uses: azure/arm-deploy@v1
         with:
-          deploymentName: main${{ github.run_number }}          
+          scope: subscription
+          subscriptionId: ${{ secrets.subscriptionId }}                 
           template: ./infra/bicep/main.bicep
           parameters: main.parameters.${{ env.ENVIRONMENT }}.json containerImageTag=${{ github.sha }}
           
       - uses: azure/arm-deploy@v1
         with:
-          deploymentName: settings${{ github.run_number }}          
+          resourceGroupName: aksupdates-function-dev
+          # deploymentName: settings${{ github.run_number }}          
           template: ./infra/bicep/functionsettings.bicep
           parameters: 
             main.parameters.${{ env.ENVIRONMENT }}.json
