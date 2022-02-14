@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "containerRegistryResourceGroupName": {
+            "value": "aksupdates-common"
+        },
+        "containerRegistryName": {
+            "value": "aksupdates"
+        },
+        "servicePrincipalId":{
+            "value": "e15574ae-4098-4f69-ab7d-1eaab7eb5167"             
+        }
+    }
+}

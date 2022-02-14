@@ -1,0 +1,31 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appServicePlan": {
+            "value": {
+                "name": "demo-app-service-plan",
+                "sku": {
+                        "name": "B1",
+                        "tier": "Basic"
+                    }
+                }
+        },
+        "resGroup": {
+            "value": {
+                "name": "demo-app-service-rg",
+                "tags": {
+                    "ApplicationName": "",
+                    "Description": "",
+                    "Environment": "dev"
+                }
+            }
+        },
+        "webApp": {
+            "value": {
+                "name": "bicep-demo-webapp",
+                "linuxFxVersion": "DOCKER|mcr.microsoft.com/appsvc/staticsite:latest"
+            }
+        }
+    }
+}

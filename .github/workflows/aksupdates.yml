@@ -16,37 +16,37 @@ jobs:
     - name: "Checkout"
       uses: actions/checkout@v2          
       
-    # - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
-    #   uses: actions/setup-dotnet@v1
-    #   with:
-    #     dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
     
-    # - name: Run unittests
-    #   run: |        
-    #     pushd ./src
-    #     dotnet test --configuration Release
-    #     popd 
+    - name: Run unittests
+      run: |        
+        pushd ./src
+        dotnet test --configuration Release
+        popd 
 
-    # - name: Publish Azure Function project
-    #   run: |        
-    #     pushd ./src
-    #     dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
-    #     popd 
+    - name: Publish Azure Function project
+      run: |        
+        pushd ./src
+        dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
+        popd 
 
-    # - name: Create zip
-    #   run: cd src/output;mkdir zip; zip -r ./zip/function.zip .
+    - name: Create zip
+      run: cd src/output;mkdir zip; zip -r ./zip/function.zip .
     
-    # - name: Copy Azure Function Package to artifacts
-    #   uses: actions/upload-artifact@v1
-    #   with:
-    #     name: functions
-    #     path: ./src/${{ env.OUTPUT_PATH }}/zip
+    - name: Copy Azure Function Package to artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: functions
+        path: ./src/${{ env.OUTPUT_PATH }}/zip
     
-    # - name: Copy infra to artifacts
-    #   uses: actions/upload-artifact@v1
-    #   with:
-    #     name: infra
-    #     path: ./infra
+    - name: Copy infra to artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: infra
+        path: ./infra
 
     - name: Azure Login
       uses: azure/login@v1
@@ -61,34 +61,11 @@ jobs:
         inlineScript: |          
           echo "::set-output name=TOKEN::$(az acr login -n aksupdates --expose-token --query accessToken -o tsv)"
 
-    #TOKEN=$(az acr login -n aksupdates --expose-token --query accessToken -o tsv) 
-    #- name: 'Build and push image'
-    #       uses: azure/docker-login@v1
-    #       with:
-    #         login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-    #         username: 00000000-0000-0000-0000-000000000000
-    #         password: ${{ secrets.REGISTRY_PASSWORD }}
-    #     - run: |
-            
-
     - name: Login, Build Docker Image and Push      
       run : |
         echo ${{ steps.get-token.outputs.TOKEN }} | docker login --username 00000000-0000-0000-0000-000000000000 --password-stdin aksupdates.azurecr.io        
         docker build -f ./src/AksUpdates.WebUI/Dockerfile -t aksupdates.azurecr.io/aksupdates.webui:${{ github.sha }} ./src
         docker push aksupdates.azurecr.io/aksupdates.webui:${{ github.sha }}
-    
-    #docker login --username 00000000-0000-0000-0000-000000000000 --password ${{ steps.get-token.outputs.TOKEN }} aksupdates.azurecr.io        
-    # - name: Build image and push to ACR
-    #   uses: docker/build-push-action@v2
-    #   with:
-    #     # relative path to the place where source code with Dockerfile is located
-    #     context: ./src/AksUpdates.WebUI
-    #     # Note: tags has to be all lower-case
-    #     tags: |
-    #       aksupdates.azurecr.io/aksupdates.webui:latest 
-    #       aksupdates.azurecr.io/aksupdates.webui:${{ github.sha }}
-    #     # build on feature branches, push only on main branch
-    #     push: true
         
   deploy:
     name: Release to Azure
@@ -115,19 +92,46 @@ jobs:
       - name: Set env to production
         if: endsWith(github.ref, '/release')
         run: |
-          echo "ENVIRONMENT=aksupdates-prod.config" >> $GITHUB_ENV
+          echo "ENVIRONMENT=prod" >> $GITHUB_ENV
 
       - name: Set env to development
         if: endsWith(github.ref, '/master')
         run: |
-          echo "ENVIRONMENT=aksupdates-dev.config" >> $GITHUB_ENV
+          echo "ENVIRONMENT=dev" >> $GITHUB_ENV
 
-      - name: Provision resources        
-        run: |            
-          pushd ./infra/provisioning  
-          chmod +x ./provisioning.sh
-          ./provisioning.sh ${{ env.ENVIRONMENT }}
-          popd
+      - uses: azure/arm-deploy@v1
+        with:
+          deploymentName: common${{ github.run_number }}          
+          template: ./infra/bicep/common.bicep
+          parameters: common.parameters.json
+
+      - uses: azure/arm-deploy@v1
+        with:
+          deploymentName: main${{ github.run_number }}          
+          template: ./infra/bicep/main.bicep
+          parameters: main.parameters.${{ env.ENVIRONMENT }}.json containerImageTag=${{ github.sha }}
+          
+      - uses: azure/arm-deploy@v1
+        with:
+          deploymentName: settings${{ github.run_number }}          
+          template: ./infra/bicep/functionsettings.bicep
+          parameters: 
+            main.parameters.${{ env.ENVIRONMENT }}.json
+            tenantId=${{ secrets.tenantId }}
+            subscriptionId=${{ secrets.subscriptionId }}
+            applicationId=${{ secrets.applicationId }}
+            servicePrincipalPassword=${{ secrets.servicePrincipalPassword }}
+            twitterApiKey=${{ secrets.twitterApiKey }}
+            twitterApiSecretKey=${{ secrets.twitterApiSecretKey }}
+            twitterAccessToken=${{ secrets.twitterAccessToken }}
+            twitterAccessTokenSecret=${{ secrets.twitterAccessTokenSecret }}
+
+      # - name: Provision resources        
+      #   run: |            
+      #     pushd ./infra/provisioning  
+      #     chmod +x ./provisioning.sh
+      #     ./provisioning.sh ${{ env.ENVIRONMENT }}
+      #     popd
 
       # - name: 'Publish Azure Functions'
         # uses: Azure/functions-action@v1
@@ -136,20 +140,20 @@ jobs:
           # app-name: ${{ env.FUNCION_APP_NAME }}       
           # package: ${{ env.OUTPUT_PATH }}
 
-      - name: Deploy & Configure environment
-        env:          
-          tenantId: ${{ secrets.tenantId }}
-          subscriptionId: ${{ secrets.subscriptionId }}
-          applicationId: ${{ secrets.applicationId }}
-          servicePrincipalPassword: ${{ secrets.servicePrincipalPassword }}
-          twitterApiKey: ${{ secrets.twitterApiKey }}
-          twitterApiSecretKey: ${{ secrets.twitterApiSecretKey }}
-          twitterAccessToken: ${{ secrets.twitterAccessToken }}
-          twitterAccessTokenSecret: ${{ secrets.twitterAccessTokenSecret }}
-          ZIPPATH: ${{ github.workspace }}/${{ env.OUTPUT_PATH }}/function.zip
-        run: |            
-          pushd ./infra/deploy  
-          chmod +x ./deploy.sh
-          ./deploy.sh ${{ env.ENVIRONMENT }}
-          popd
+      # - name: Deploy & Configure environment
+      #   env:          
+      #     tenantId: ${{ secrets.tenantId }}
+      #     subscriptionId: ${{ secrets.subscriptionId }}
+      #     applicationId: ${{ secrets.applicationId }}
+      #     servicePrincipalPassword: ${{ secrets.servicePrincipalPassword }}
+      #     twitterApiKey: ${{ secrets.twitterApiKey }}
+      #     twitterApiSecretKey: ${{ secrets.twitterApiSecretKey }}
+      #     twitterAccessToken: ${{ secrets.twitterAccessToken }}
+      #     twitterAccessTokenSecret: ${{ secrets.twitterAccessTokenSecret }}
+      #     ZIPPATH: ${{ github.workspace }}/${{ env.OUTPUT_PATH }}/function.zip
+      #   run: |            
+      #     pushd ./infra/deploy  
+      #     chmod +x ./deploy.sh
+      #     ./deploy.sh ${{ env.ENVIRONMENT }}
+      #     popd
          
