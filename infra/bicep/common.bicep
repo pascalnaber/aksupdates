@@ -3,10 +3,11 @@ targetScope = 'subscription'
 param containerRegistryResourceGroupName string
 param containerRegistryName string
 param servicePrincipalId string
+param location string = deployment().location
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: containerRegistryResourceGroupName
-  location: deployment().location  
+  location: location
 }
 
 module containerRegistry 'modules/ContainerRegistry/registries.bicep' = {
@@ -15,5 +16,6 @@ module containerRegistry 'modules/ContainerRegistry/registries.bicep' = {
   params: {
     acrName: containerRegistryName
     servicePrincipalId: servicePrincipalId
+    location: location
   }
 }

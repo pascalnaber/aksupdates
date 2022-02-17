@@ -14,15 +14,16 @@ param storageResourceGroup string
 param functionAppName string
 param functionStorageAccountName string
 param functionResourceGroup string
+param location string = deployment().location
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: webappResourceGroup
-  location: deployment().location
+  location: location
 }
 
 resource rgStorage 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: storageResourceGroup
-  location: deployment().location
+  location: location
 }
 
 module appPlan 'modules/Web/serverfarm-linux.bicep' = {
@@ -32,7 +33,7 @@ module appPlan 'modules/Web/serverfarm-linux.bicep' = {
     appServicePlanName: hostingplanName
     appServicePlanSkuName: appServicePlanSkuName
     appServicePlanCapacity: appServicePlanCapacity
-    
+    location: location
   }
 }
 
@@ -46,6 +47,7 @@ module app 'modules/Web/site.bicep' = {
     acrResourceGroupName: acrResourceGroup
     linuxFxVersion: 'DOCKER|${containerImage}:${containerImageTag}'
     storageAccountConnectionString: storageaccount.outputs.blobStorageConnectionString
+    location: location
   }
 }
 
@@ -54,12 +56,13 @@ module storageaccount 'modules/Storage/storageAccount.bicep' = {
   name: storageAccountName
   params: {
     storageAccountName: storageAccountName
+    location: location
   }
 }
 
 resource functionrg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: functionResourceGroup
-  location: deployment().location
+  location: location
 }
 
 module functionapp 'modules/Web/function.bicep' = {
@@ -69,5 +72,6 @@ module functionapp 'modules/Web/function.bicep' = {
     functionAppName: functionAppName
     appServicePlanName: functionAppName
     storageAccountName: functionStorageAccountName
+    location: location
   }
 }
