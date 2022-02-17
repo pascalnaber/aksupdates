@@ -122,7 +122,7 @@ jobs:
           # deploymentName: settings${{ github.run_number }}          
           template: ./infra/bicep/functionsettings.bicep
           parameters: 
-            main.parameters.${{ env.ENVIRONMENT }}.json
+            ./infra/bicep/main.parameters.${{ env.ENVIRONMENT }}.json
             tenantId=${{ secrets.tenantId }}
             subscriptionId=${{ secrets.subscriptionId }}
             applicationId=${{ secrets.applicationId }}
