@@ -105,7 +105,7 @@ jobs:
           subscriptionId: ${{ secrets.subscriptionId }}  
           region: westeurope        
           template: ./infra/bicep/common.bicep
-          parameters: common.parameters.json
+          parameters: ./infra/bicep/common.parameters.json
 
       - uses: azure/arm-deploy@v1
         with:
@@ -113,7 +113,7 @@ jobs:
           subscriptionId: ${{ secrets.subscriptionId }}  
           region: westeurope                  
           template: ./infra/bicep/main.bicep
-          parameters: main.parameters.${{ env.ENVIRONMENT }}.json containerImageTag=${{ github.sha }}
+          parameters: ./infra/bicep/main.parameters.${{ env.ENVIRONMENT }}.json containerImageTag=${{ github.sha }}
           
       - uses: azure/arm-deploy@v1
         with:
