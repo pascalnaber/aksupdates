@@ -16,6 +16,17 @@ param functionStorageAccountName string
 param functionResourceGroup string
 param location string = deployment().location
 
+param tenantId string
+param subscriptionId string
+param applicationId string
+param servicePrincipalPassword string
+param twitterApiKey string
+param twitterApiSecretKey string
+param twitterAccessToken string
+param twitterAccessTokenSecret string
+param toggleSendNotifications bool
+param tableStorageName string
+
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: webappResourceGroup
   location: location
@@ -73,5 +84,24 @@ module functionapp 'modules/Web/function.bicep' = {
     appServicePlanName: functionAppName
     storageAccountName: functionStorageAccountName
     location: location
+  }
+}
+
+module functionappSettings 'modules/Web/functionsettings.bicep' = {
+  scope: functionrg
+  name: functionAppName
+  params: {
+    functionAppName: functionAppName
+    applicationId: applicationId
+    servicePrincipalPassword: servicePrincipalPassword
+    subscriptionId: subscriptionId
+    tableStorageConnectionString: storageaccount.outputs.blobStorageConnectionString
+    tableStorageName: tableStorageName
+    tenantId: tenantId
+    toggleSendNotifications: toggleSendNotifications
+    twitterAccessToken: twitterAccessToken
+    twitterAccessTokenSecret: twitterAccessTokenSecret
+    twitterApiKey: twitterApiKey
+    twitterApiSecretKey: twitterApiSecretKey
   }
 }

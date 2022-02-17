@@ -29,6 +29,9 @@
         "storageResourceGroup": {
             "value": "aksupdates-data-dev"
         },
+        "tableStorageName": {
+            "value": "aksupdates"
+        },
         "functionAppName": {
             "value": "aksupdates-dev"
         },

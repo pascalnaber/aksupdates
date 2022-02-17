@@ -113,16 +113,9 @@ jobs:
           subscriptionId: ${{ secrets.subscriptionId }}  
           region: westeurope                  
           template: ./infra/bicep/main.bicep
-          parameters: ./infra/bicep/main.parameters.${{ env.ENVIRONMENT }}.json containerImageTag=${{ github.sha }}
-          
-      - uses: azure/arm-deploy@v1
-        with:
-          resourceGroupName: aksupdates-function-dev
-          region: westeurope   
-          # deploymentName: settings${{ github.run_number }}          
-          template: ./infra/bicep/functionsettings.bicep
           parameters: 
-            ./infra/bicep/main.parameters.${{ env.ENVIRONMENT }}.json
+            ./infra/bicep/main.parameters.${{ env.ENVIRONMENT }}.json 
+            containerImageTag=${{ github.sha }}
             tenantId=${{ secrets.tenantId }}
             subscriptionId=${{ secrets.subscriptionId }}
             applicationId=${{ secrets.applicationId }}
@@ -130,7 +123,24 @@ jobs:
             twitterApiKey=${{ secrets.twitterApiKey }}
             twitterApiSecretKey=${{ secrets.twitterApiSecretKey }}
             twitterAccessToken=${{ secrets.twitterAccessToken }}
-            twitterAccessTokenSecret=${{ secrets.twitterAccessTokenSecret }}            
+            twitterAccessTokenSecret=${{ secrets.twitterAccessTokenSecret }}  
+          
+      # - uses: azure/arm-deploy@v1
+      #   with:
+      #     resourceGroupName: aksupdates-function-dev
+      #     region: westeurope   
+      #     # deploymentName: settings${{ github.run_number }}          
+      #     template: ./infra/bicep/functionsettings.bicep
+      #     parameters: 
+      #       ./infra/bicep/main.parameters.${{ env.ENVIRONMENT }}.json
+      #       tenantId=${{ secrets.tenantId }}
+      #       subscriptionId=${{ secrets.subscriptionId }}
+      #       applicationId=${{ secrets.applicationId }}
+      #       servicePrincipalPassword=${{ secrets.servicePrincipalPassword }}
+      #       twitterApiKey=${{ secrets.twitterApiKey }}
+      #       twitterApiSecretKey=${{ secrets.twitterApiSecretKey }}
+      #       twitterAccessToken=${{ secrets.twitterAccessToken }}
+      #       twitterAccessTokenSecret=${{ secrets.twitterAccessTokenSecret }}            
 
       # - name: Provision resources        
       #   run: |            
