@@ -130,7 +130,7 @@ jobs:
             twitterApiKey=${{ secrets.twitterApiKey }}
             twitterApiSecretKey=${{ secrets.twitterApiSecretKey }}
             twitterAccessToken=${{ secrets.twitterAccessToken }}
-            twitterAccessTokenSecret=${{ secrets.twitterAccessTokenSecret }}
+            twitterAccessTokenSecret=${{ secrets.twitterAccessTokenSecret }}            
 
       # - name: Provision resources        
       #   run: |            

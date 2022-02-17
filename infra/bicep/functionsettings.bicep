@@ -8,8 +8,12 @@ param twitterApiSecretKey string
 param twitterAccessToken string
 param twitterAccessTokenSecret string
 param toggleSendNotifications bool
+param storageAccountName string
 param tableStorageName string
-param tableStorageConnectionString string
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-06-01' existing = {
+  name: storageAccountName
+}
 
 resource functionAppStagingAppsettings 'Microsoft.Web/sites/slots/config@2016-08-01' = {
   name: '${functionAppName}/appsettings'
@@ -19,7 +23,7 @@ resource functionAppStagingAppsettings 'Microsoft.Web/sites/slots/config@2016-08
     applicationId: applicationId
     servicePrincipalPassword: servicePrincipalPassword
     tableStorageName: tableStorageName
-    tableStorageConnectionString: tableStorageConnectionString
+    tableStorageConnectionString: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
     twitterApiKey: twitterApiKey
     twitterApiSecretKey: twitterApiSecretKey
     twitterAccessToken: twitterAccessToken
