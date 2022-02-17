@@ -89,7 +89,7 @@ module functionapp 'modules/Web/function.bicep' = {
 
 module functionappSettings 'modules/Web/functionsettings.bicep' = {
   scope: functionrg
-  name: functionAppName
+  name: '${functionAppName}settings'
   params: {
     functionAppName: functionAppName
     applicationId: applicationId
