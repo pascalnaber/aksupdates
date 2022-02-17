@@ -9,7 +9,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: deployment().location  
 }
 
-module containerRegistry 'modules/Microsoft.ContainerRegistry/registries.bicep' = {
+module containerRegistry 'modules/ContainerRegistry/registries.bicep' = {
   scope: rg
   name: containerRegistryName
   params: {
