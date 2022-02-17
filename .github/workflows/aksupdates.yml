@@ -102,20 +102,23 @@ jobs:
       - uses: azure/arm-deploy@v1
         with:
           scope: subscription
-          subscriptionId: ${{ secrets.subscriptionId }}          
+          subscriptionId: ${{ secrets.subscriptionId }}  
+          location: westeurope        
           template: ./infra/bicep/common.bicep
           parameters: common.parameters.json
 
       - uses: azure/arm-deploy@v1
         with:
           scope: subscription
-          subscriptionId: ${{ secrets.subscriptionId }}                 
+          subscriptionId: ${{ secrets.subscriptionId }}  
+          location: westeurope                  
           template: ./infra/bicep/main.bicep
           parameters: main.parameters.${{ env.ENVIRONMENT }}.json containerImageTag=${{ github.sha }}
           
       - uses: azure/arm-deploy@v1
         with:
           resourceGroupName: aksupdates-function-dev
+          location: westeurope   
           # deploymentName: settings${{ github.run_number }}          
           template: ./infra/bicep/functionsettings.bicep
           parameters: 
