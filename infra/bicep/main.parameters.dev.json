@@ -45,7 +45,7 @@
             "value": "aksupdates.azurecr.io/aksupdates.webui"
         },
         "toggleSendNotifications": {
-            "value": false
+            "value": "false"
         }   
     }
 }

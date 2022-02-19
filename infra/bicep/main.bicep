@@ -24,7 +24,7 @@ param twitterApiKey string
 param twitterApiSecretKey string
 param twitterAccessToken string
 param twitterAccessTokenSecret string
-param toggleSendNotifications bool
+param toggleSendNotifications string
 param tableStorageName string
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -103,5 +103,9 @@ module functionappSettings 'modules/Web/functionsettings.bicep' = {
     twitterAccessTokenSecret: twitterAccessTokenSecret
     twitterApiKey: twitterApiKey
     twitterApiSecretKey: twitterApiSecretKey
+    existingFunctionAppStagingAppsettings:  functionapp.outputs.settings
   }
+  dependsOn: [
+    functionapp
+  ]
 }

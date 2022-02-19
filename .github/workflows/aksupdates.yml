@@ -124,7 +124,17 @@ jobs:
             twitterApiSecretKey=${{ secrets.twitterApiSecretKey }}
             twitterAccessToken=${{ secrets.twitterAccessToken }}
             twitterAccessTokenSecret=${{ secrets.twitterAccessTokenSecret }}  
-          
+
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            ZIPPATH=${{ github.workspace }}/${{ env.OUTPUT_PATH }}/function.zip
+            RESOURCEGROUP_FUNCTIONAPP=aksupdates-function-${{ env.ENVIRONMENT }}
+            FUNCTIONAPP_NAME=aksupdates-${{ env.ENVIRONMENT }}
+            az functionapp deployment source config-zip -g $RESOURCEGROUP_FUNCTIONAPP -n $FUNCTIONAPP_NAME --src $ZIPPATH
+
       # - uses: azure/arm-deploy@v1
       #   with:
       #     resourceGroupName: aksupdates-function-dev
@@ -154,7 +164,7 @@ jobs:
         # id: fa
         # with:
           # app-name: ${{ env.FUNCION_APP_NAME }}       
-          # package: ${{ env.OUTPUT_PATH }}
+          # package: ${{ github.workspace }}/${{ env.OUTPUT_PATH }}/function.zip
 
       # - name: Deploy & Configure environment
       #   env:          

@@ -84,3 +84,6 @@ resource functionApp 'Microsoft.Web/sites@2018-11-01' = {
     }
   }
 }
+
+output id string = functionApp.id
+output settings object = list('${functionApp.id}/config/appsettings', '2020-12-01').properties
