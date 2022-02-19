@@ -107,23 +107,23 @@ jobs:
           template: ./infra/bicep/common.bicep
           parameters: ./infra/bicep/common.parameters.json
 
-      - uses: azure/arm-deploy@v1
-        with:
-          scope: subscription
-          subscriptionId: ${{ secrets.subscriptionId }}  
-          region: westeurope                  
-          template: ./infra/bicep/main.bicep
-          parameters: 
-            ./infra/bicep/main.parameters.${{ env.ENVIRONMENT }}.json 
-            containerImageTag=${{ github.sha }}
-            tenantId=${{ secrets.tenantId }}
-            subscriptionId=${{ secrets.subscriptionId }}
-            applicationId=${{ secrets.applicationId }}
-            servicePrincipalPassword=${{ secrets.servicePrincipalPassword }}
-            twitterApiKey=${{ secrets.twitterApiKey }}
-            twitterApiSecretKey=${{ secrets.twitterApiSecretKey }}
-            twitterAccessToken=${{ secrets.twitterAccessToken }}
-            twitterAccessTokenSecret=${{ secrets.twitterAccessTokenSecret }}  
+      # - uses: azure/arm-deploy@v1
+      #   with:
+      #     scope: subscription
+      #     subscriptionId: ${{ secrets.subscriptionId }}  
+      #     region: westeurope                  
+      #     template: ./infra/bicep/main.bicep
+      #     parameters: 
+      #       ./infra/bicep/main.parameters.${{ env.ENVIRONMENT }}.json 
+      #       containerImageTag=${{ github.sha }}
+      #       tenantId=${{ secrets.tenantId }}
+      #       subscriptionId=${{ secrets.subscriptionId }}
+      #       applicationId=${{ secrets.applicationId }}
+      #       servicePrincipalPassword=${{ secrets.servicePrincipalPassword }}
+      #       twitterApiKey=${{ secrets.twitterApiKey }}
+      #       twitterApiSecretKey=${{ secrets.twitterApiSecretKey }}
+      #       twitterAccessToken=${{ secrets.twitterAccessToken }}
+      #       twitterAccessTokenSecret=${{ secrets.twitterAccessTokenSecret }}  
 
       - name: Azure CLI script
         uses: azure/CLI@v1
