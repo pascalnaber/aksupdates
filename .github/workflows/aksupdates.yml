@@ -136,7 +136,7 @@ jobs:
             ls $GITHUB_WORKSPACE/
             ls $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}
             
-            ZIPPATH=$GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}/functions.zip
+            ZIPPATH=$GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}/function.zip
             RESOURCEGROUP_FUNCTIONAPP=aksupdates-function-${{ env.ENVIRONMENT }}
             FUNCTIONAPP_NAME=aksupdates-${{ env.ENVIRONMENT }}
             az functionapp deployment source config-zip -g $RESOURCEGROUP_FUNCTIONAPP -n $FUNCTIONAPP_NAME --src $ZIPPATH
