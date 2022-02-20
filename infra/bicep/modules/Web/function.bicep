@@ -59,10 +59,10 @@ resource functionApp 'Microsoft.Web/sites@2018-11-01' = {
     clientAffinityEnabled: true
     siteConfig: {
       linuxFxVersion: 'DOTNET|6.0'
-      appSettings: [
+      appSettings: [        
         {
-          name: 'AzureWebJobsStorage__accountName'
-          value: storageAccount.name
+          name: 'AzureWebJobsStorage'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
         }
         {
           name: 'FUNCTIONS_EXTENSION_VERSION'

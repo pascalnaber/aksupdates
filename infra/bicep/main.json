@@ -572,6 +572,10 @@
                       "value": "[parameters('storageAccountName')]"
                     },
                     {
+                      "name": "AzureWebJobsStorage",
+                      "value": "[parameters('storageAccountName')]"
+                    },                    
+                    {
                       "name": "FUNCTIONS_EXTENSION_VERSION",
                       "value": "~4"
                     },
