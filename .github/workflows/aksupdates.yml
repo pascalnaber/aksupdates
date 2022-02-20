@@ -133,13 +133,13 @@ jobs:
           inlineScript: |
             set +e
             ls
-            ls ${{ github.workspace }}/
-            ls ${{ github.workspace }}/${{ env.OUTPUT_PATH }}
+            ls $GITHUB_WORKSPACE/
+            ls $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}
             
-            # ZIPPATH=${{ github.workspace }}/${{ env.OUTPUT_PATH }}/functions.zip
-            # RESOURCEGROUP_FUNCTIONAPP=aksupdates-function-${{ env.ENVIRONMENT }}
-            # FUNCTIONAPP_NAME=aksupdates-${{ env.ENVIRONMENT }}
-            # az functionapp deployment source config-zip -g $RESOURCEGROUP_FUNCTIONAPP -n $FUNCTIONAPP_NAME --src $ZIPPATH
+            ZIPPATH=$GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}/functions.zip
+            RESOURCEGROUP_FUNCTIONAPP=aksupdates-function-${{ env.ENVIRONMENT }}
+            FUNCTIONAPP_NAME=aksupdates-${{ env.ENVIRONMENT }}
+            az functionapp deployment source config-zip -g $RESOURCEGROUP_FUNCTIONAPP -n $FUNCTIONAPP_NAME --src $ZIPPATH
 
       # - uses: azure/arm-deploy@v1
       #   with:
