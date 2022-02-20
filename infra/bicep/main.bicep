@@ -84,7 +84,7 @@ module functionapp 'modules/Web/function.bicep' = {
     appServicePlanName: functionAppName
     storageAccountName: functionStorageAccountName
     location: location
-  }
+  } 
 }
 
 module functionappSettings 'modules/Web/functionsettings.bicep' = {
