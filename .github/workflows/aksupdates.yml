@@ -113,6 +113,7 @@ jobs:
           subscriptionId: ${{ secrets.subscriptionId }}  
           region: westeurope                  
           template: ./infra/bicep/main.bicep
+          failOnStdErr: false
           parameters: 
             ./infra/bicep/main.parameters.${{ env.ENVIRONMENT }}.json 
             containerImageTag=${{ github.sha }}
