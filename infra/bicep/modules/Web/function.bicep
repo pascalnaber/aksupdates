@@ -80,6 +80,10 @@ resource functionApp 'Microsoft.Web/sites@2018-11-01' = {
           name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
         }
+        {
+          name: 'WEBSITE_CONTENTSHARE'
+          value: 'aksupdates'
+        }
       ]
     }
   }
