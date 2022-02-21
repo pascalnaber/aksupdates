@@ -17,15 +17,14 @@ var newSettings = {
   subscriptionId: subscriptionId
   applicationId: applicationId
   servicePrincipalPassword: servicePrincipalPassword
-  tableStorageName: tableStorageName
-  tableStorageConnectionString: tableStorageConnectionString
+  'azureTableStorageConfiguration:tableStorageName': tableStorageName
+  'azureTableStorageConfiguration:tableStorageConnectionString': tableStorageConnectionString
   twitterApiKey: twitterApiKey
   twitterApiSecretKey: twitterApiSecretKey
   twitterAccessToken: twitterAccessToken
   twitterAccessTokenSecret: twitterAccessTokenSecret
-  toggle_SendNotification: toggleSendNotifications
+  toggle_SendNotification: toggleSendNotifications 
 }
-
 
 resource functionApp 'Microsoft.Web/sites@2018-11-01' existing = {
   name: functionAppName
