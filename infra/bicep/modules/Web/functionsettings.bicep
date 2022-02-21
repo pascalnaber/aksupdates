@@ -17,8 +17,8 @@ var newSettings = {
   subscriptionId: subscriptionId
   applicationId: applicationId
   servicePrincipalPassword: servicePrincipalPassword
-  'azureTableStorageConfiguration:tableStorageName': tableStorageName
-  'azureTableStorageConfiguration:tableStorageConnectionString': tableStorageConnectionString
+  azureTableStorageConfiguration__tableStorageName: tableStorageName
+  azureTableStorageConfiguration__tableStorageConnectionString: tableStorageConnectionString
   twitterApiKey: twitterApiKey
   twitterApiSecretKey: twitterApiSecretKey
   twitterAccessToken: twitterAccessToken
