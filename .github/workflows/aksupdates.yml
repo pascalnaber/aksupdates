@@ -131,11 +131,6 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            set +e
-            ls
-            ls $GITHUB_WORKSPACE/
-            ls $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}
-            
             ZIPPATH=$GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}/function.zip
             RESOURCEGROUP_FUNCTIONAPP=aksupdates-function-${{ env.ENVIRONMENT }}
             FUNCTIONAPP_NAME=aksupdates-${{ env.ENVIRONMENT }}
