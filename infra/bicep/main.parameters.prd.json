@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "hostingplanName": {
+            "value": "aksupdates-lnx-hostingplan"
+        },
+        "appServicePlanSkuName": {
+            "value": "B1"
+        },
+        "appServicePlanCapacity": {
+            "value": 1
+        },
+        "webappResourceGroup": {
+            "value": "aksupdates-lnx-prd"
+        },
+        "webAppName": {
+            "value": "akslatestversion"
+        },
+        "acrName": {
+            "value": "aksupdates"
+        },
+        "acrResourceGroup": {
+            "value": "aksupdates-common"
+        },
+        "storageAccountName": {
+            "value": "aksupddataprd"
+        },
+        "storageResourceGroup": {
+            "value": "aksupdates-data-prd"
+        },
+        "tableStorageName": {
+            "value": "aksupdates"
+        },
+        "functionAppName": {
+            "value": "aksupdates-prd"
+        },
+        "functionStorageAccountName": {
+            "value": "aksupdatesprd"
+        },
+        "functionResourceGroup": {
+            "value": "aksupdates-function-prd"
+        },
+        "containerImage": {
+            "value": "aksupdates.azurecr.io/aksupdates.webui"
+        },
+        "toggleSendNotifications": {
+            "value": "false"
+        }   
+    }
+}
