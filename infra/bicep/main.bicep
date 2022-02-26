@@ -27,6 +27,9 @@ param twitterAccessTokenSecret string
 param toggleSendNotifications string
 param tableStorageName string
 
+param subDomainName string
+param dnsZone string
+
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: webappResourceGroup
   location: location
@@ -59,6 +62,8 @@ module app 'modules/Web/site.bicep' = {
     linuxFxVersion: 'DOCKER|${containerImage}:${containerImageTag}'
     storageAccountConnectionString: storageaccount.outputs.blobStorageConnectionString
     location: location
+    applicationName: subDomainName
+    dnsZone: dnsZone
   }
 }
 

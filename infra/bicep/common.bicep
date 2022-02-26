@@ -14,6 +14,7 @@ module containerRegistry 'modules/ContainerRegistry/registries.bicep' = {
   scope: rg
   name: containerRegistryName
   params: {
+    acrAdminUserEnabled: true
     acrName: containerRegistryName
     servicePrincipalId: servicePrincipalId
     location: location

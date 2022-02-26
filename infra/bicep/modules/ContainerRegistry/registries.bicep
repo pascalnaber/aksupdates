@@ -52,3 +52,5 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-prev
 }
 
 output acrLoginServer string = acr.properties.loginServer
+output x string = acr.listCredentials().username
+output x string = acr.listCredentials().passwords[0].value

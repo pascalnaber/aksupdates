@@ -44,6 +44,12 @@
         "containerImage": {
             "value": "aksupdates.azurecr.io/aksupdates.webui"
         },
+        "subDomainName": {
+            "value": "akslatestversiondev"
+        },
+        "dnsZone": {
+            "value": "techdriven.nl"
+        },
         "toggleSendNotifications": {
             "value": "false"
         }   

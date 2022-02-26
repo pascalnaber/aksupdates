@@ -22,3 +22,4 @@ az functionapp config appsettings set -n $FUNCTIONAPP_NAME  -g $RESOURCEGROUP_FU
     "twitterAccessToken=$twitterAccessToken" \
     "twitterAccessTokenSecret=$twitterAccessTokenSecret" \
     "toggle_SendNotification=$TOGGLE_SENDNOTIFICATIONS" &>/dev/null
+
