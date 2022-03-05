@@ -27,7 +27,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-app.Run("http://*:8080");
+//app.Run("http://*:8080");
 
 app.MapControllerRoute(
     name: "default",
