@@ -54,7 +54,7 @@
             "value": "akslatestversiondev"
         },
         "containerInstanceName": {
-            "value": "aksupdates-dev"
+            "value": "ci-aksupdates-dev"
         },
         "toggleSendNotifications": {
             "value": "false"
