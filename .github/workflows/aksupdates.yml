@@ -92,7 +92,7 @@ jobs:
       - name: Set env to production
         if: endsWith(github.ref, '/release')
         run: |
-          echo "ENVIRONMENT=prod" >> $GITHUB_ENV
+          echo "ENVIRONMENT=prd" >> $GITHUB_ENV
 
       - name: Set env to development
         if: endsWith(github.ref, '/master')
