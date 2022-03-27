@@ -48,7 +48,7 @@
             "value": "@"
         },
         "dnsZone": {
-            "value": "akslatestversion-dev.techdriven.nl"
+            "value": "akslatestversiondev.techdriven.nl"
         },
         "dnsName":{
             "value": "akslatestversiondev"
