@@ -61,6 +61,7 @@ module acrroleassignment 'acr-roleassignment.bicep' = {
 //   }
 // }
 
+
 // resource dnsCname 'Microsoft.Network/dnsZones/CNAME@2018-05-01' = {
 //   name: '${dnsZone}/${applicationName}'
 //   properties: {

@@ -15,6 +15,7 @@ param functionAppName string
 param functionStorageAccountName string
 param functionResourceGroup string
 param location string = deployment().location
+param containerInstanceName string
 
 param tenantId string
 param subscriptionId string
@@ -29,6 +30,7 @@ param tableStorageName string
 
 param subDomainName string
 param dnsZone string
+param dnsName string
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: webappResourceGroup
@@ -39,34 +41,6 @@ resource rgStorage 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: storageResourceGroup
   location: location
 }
-
-module appPlan 'modules/Web/serverfarm-linux.bicep' = {
-  scope: rg
-  name: hostingplanName
-  params: {
-    appServicePlanName: hostingplanName
-    appServicePlanSkuName: appServicePlanSkuName
-    appServicePlanCapacity: appServicePlanCapacity
-    location: location
-  }
-}
-
-module app 'modules/Web/site.bicep' = {
-  scope: rg
-  name: webAppName
-  params: {
-    webAppName: webAppName
-    appServicePlanResourceId: appPlan.outputs.appServicePlanResourceId
-    acrName: acrName
-    acrResourceGroupName: acrResourceGroup
-    linuxFxVersion: 'DOCKER|${containerImage}:${containerImageTag}'
-    storageAccountConnectionString: storageaccount.outputs.blobStorageConnectionString
-    location: location
-    applicationName: subDomainName
-    dnsZone: dnsZone
-  }
-}
-
 module storageaccount 'modules/Storage/storageAccount.bicep' = {
   scope: rgStorage
   name: storageAccountName
@@ -89,6 +63,30 @@ module functionapp 'modules/Web/function.bicep' = {
     appServicePlanName: functionAppName
     storageAccountName: functionStorageAccountName
     location: location
+  } 
+}
+
+module containerInstance 'modules/ContainerInstance/containerGroup.bicep' = {
+  scope: functionrg
+  name: containerInstanceName
+  params: {
+    containerName: containerInstanceName
+    imageName: '${containerImage}:${containerImageTag}'
+    dnsName: dnsName
+    dnsZone: dnsZone
+    location: location
+    acrName: acrName
+    storageAccountConnectionString: storageaccount.outputs.blobStorageConnectionString
+  } 
+}
+
+module containerInstanceDnsRecord 'modules/Network/dnsArecord.bicep' = {
+  scope: rgStorage
+  name: '${containerInstanceName}dnsArecord'
+  params: {
+    subdomain: subDomainName        
+    dnsZone: dnsZone    
+    ipAddress: containerInstance.outputs.containerIpv4Address
   } 
 }
 

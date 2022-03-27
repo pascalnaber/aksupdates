@@ -4,9 +4,7 @@ param imageName string
 param cpuCores int = 1
 param memoryInGb int = 1
 param dnsName string 
-param dnsZone string
 param acrName string
-param storageAccountConnectionString string
 
 resource acr 'Microsoft.ContainerRegistry/registries@2019-12-01-preview' existing = {
   scope: resourceGroup('aksupdates-common') 
@@ -35,20 +33,6 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
               memoryInGB: memoryInGb
             }
           }
-          environmentVariables:[
-          {
-            name: 'ASPNETCORE_URLS'
-            value: 'http://+:8080'
-          }
-          {
-            name: 'azureTableStorageConfiguration__tableStorageName'
-            value: 'aksupdates'
-           }
-           {
-            name: 'azureTableStorageConfiguration__tableStorageConnectionString'
-            value: storageAccountConnectionString
-           }
-          ]
           ports: [
             {
               protocol: 'TCP'
@@ -65,7 +49,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
             'caddy'
             'reverse-proxy'
             '--from'
-            '${dnsZone}'
+            'akslatestversiondev.techdriven.nl'
             '--to'
             'localhost:8080'
           ]

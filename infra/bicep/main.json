@@ -1,0 +1,693 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.1318.3566",
+      "templateHash": "8211784985528737990"
+    }
+  },
+  "parameters": {
+    "webappResourceGroup": {
+      "type": "string"
+    },
+    "hostingplanName": {
+      "type": "string"
+    },
+    "webAppName": {
+      "type": "string"
+    },
+    "containerImage": {
+      "type": "string"
+    },
+    "containerImageTag": {
+      "type": "string"
+    },
+    "appServicePlanSkuName": {
+      "type": "string"
+    },
+    "appServicePlanCapacity": {
+      "type": "int"
+    },
+    "acrName": {
+      "type": "string"
+    },
+    "acrResourceGroup": {
+      "type": "string"
+    },
+    "storageAccountName": {
+      "type": "string"
+    },
+    "storageResourceGroup": {
+      "type": "string"
+    },
+    "functionAppName": {
+      "type": "string"
+    },
+    "functionStorageAccountName": {
+      "type": "string"
+    },
+    "functionResourceGroup": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[deployment().location]"
+    },
+    "containerInstanceName": {
+      "type": "string"
+    },
+    "tenantId": {
+      "type": "string"
+    },
+    "subscriptionId": {
+      "type": "string"
+    },
+    "applicationId": {
+      "type": "string"
+    },
+    "servicePrincipalPassword": {
+      "type": "string"
+    },
+    "twitterApiKey": {
+      "type": "string"
+    },
+    "twitterApiSecretKey": {
+      "type": "string"
+    },
+    "twitterAccessToken": {
+      "type": "string"
+    },
+    "twitterAccessTokenSecret": {
+      "type": "string"
+    },
+    "toggleSendNotifications": {
+      "type": "string"
+    },
+    "tableStorageName": {
+      "type": "string"
+    },
+    "subDomainName": {
+      "type": "string"
+    },
+    "dnsZone": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2021-04-01",
+      "name": "[parameters('webappResourceGroup')]",
+      "location": "[parameters('location')]"
+    },
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2021-04-01",
+      "name": "[parameters('storageResourceGroup')]",
+      "location": "[parameters('location')]"
+    },
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2021-04-01",
+      "name": "[parameters('functionResourceGroup')]",
+      "location": "[parameters('location')]"
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[parameters('storageAccountName')]",
+      "resourceGroup": "[parameters('storageResourceGroup')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "storageAccountName": {
+            "value": "[parameters('storageAccountName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1318.3566",
+              "templateHash": "7943189968668536545"
+            }
+          },
+          "parameters": {
+            "storageAccountType": {
+              "type": "string",
+              "defaultValue": "Standard_LRS",
+              "allowedValues": [
+                "Premium_LRS",
+                "Premium_ZRS",
+                "Standard_GRS",
+                "Standard_GZRS",
+                "Standard_LRS",
+                "Standard_RAGRS",
+                "Standard_RAGZRS",
+                "Standard_ZRS"
+              ],
+              "metadata": {
+                "description": "Storage Account type"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for all resources."
+              }
+            },
+            "storageAccountName": {
+              "type": "string",
+              "defaultValue": "[format('store{0}', uniqueString(resourceGroup().id))]",
+              "metadata": {
+                "description": "The name of the Storage Account"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Storage/storageAccounts",
+              "apiVersion": "2021-06-01",
+              "name": "[parameters('storageAccountName')]",
+              "location": "[parameters('location')]",
+              "sku": {
+                "name": "[parameters('storageAccountType')]"
+              },
+              "kind": "StorageV2",
+              "properties": {}
+            }
+          ],
+          "outputs": {
+            "blobStorageConnectionString": {
+              "type": "string",
+              "value": "[format('DefaultEndpointsProtocol=https;AccountName={0};EndpointSuffix={1};AccountKey={2}', parameters('storageAccountName'), environment().suffixes.storage, listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2021-06-01').keys[0].value)]"
+            },
+            "storageAccountName": {
+              "type": "string",
+              "value": "[parameters('storageAccountName')]"
+            },
+            "storageAccountId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', parameters('storageResourceGroup'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[parameters('functionAppName')]",
+      "resourceGroup": "[parameters('functionResourceGroup')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "functionAppName": {
+            "value": "[parameters('functionAppName')]"
+          },
+          "appServicePlanName": {
+            "value": "[parameters('functionAppName')]"
+          },
+          "storageAccountName": {
+            "value": "[parameters('functionStorageAccountName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1318.3566",
+              "templateHash": "13225037355595607985"
+            }
+          },
+          "parameters": {
+            "appServicePlanName": {
+              "type": "string"
+            },
+            "functionAppName": {
+              "type": "string"
+            },
+            "storageAccountName": {
+              "type": "string",
+              "defaultValue": "[parameters('functionAppName')]"
+            },
+            "appInsightsName": {
+              "type": "string",
+              "defaultValue": "[parameters('functionAppName')]"
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Insights/components",
+              "apiVersion": "2020-02-02-preview",
+              "name": "[parameters('appInsightsName')]",
+              "location": "[parameters('location')]",
+              "kind": "web",
+              "properties": {
+                "Application_Type": "web",
+                "publicNetworkAccessForIngestion": "Enabled",
+                "publicNetworkAccessForQuery": "Enabled"
+              },
+              "tags": {
+                "[format('hidden-link:/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}', subscription().id, resourceGroup().name, parameters('functionAppName'))]": "Resource"
+              }
+            },
+            {
+              "type": "Microsoft.Storage/storageAccounts",
+              "apiVersion": "2020-08-01-preview",
+              "name": "[parameters('storageAccountName')]",
+              "location": "[parameters('location')]",
+              "properties": {
+                "supportsHttpsTrafficOnly": true,
+                "minimumTlsVersion": "TLS1_2"
+              },
+              "kind": "StorageV2",
+              "sku": {
+                "name": "Standard_LRS"
+              }
+            },
+            {
+              "type": "Microsoft.Web/serverfarms",
+              "apiVersion": "2020-12-01",
+              "name": "[parameters('appServicePlanName')]",
+              "location": "[parameters('location')]",
+              "kind": "linux",
+              "sku": {
+                "name": "Y1",
+                "tier": "Dynamic"
+              },
+              "properties": {
+                "reserved": true
+              }
+            },
+            {
+              "type": "Microsoft.Web/sites",
+              "apiVersion": "2018-11-01",
+              "name": "[parameters('functionAppName')]",
+              "location": "[parameters('location')]",
+              "kind": "functionapp,linux",
+              "identity": {
+                "type": "SystemAssigned"
+              },
+              "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
+                "httpsOnly": true,
+                "clientAffinityEnabled": true,
+                "siteConfig": {
+                  "linuxFxVersion": "DOTNET|6.0",
+                  "appSettings": [
+                    {
+                      "name": "AzureWebJobsStorage",
+                      "value": "[format('DefaultEndpointsProtocol=https;AccountName={0};EndpointSuffix={1};AccountKey={2}', parameters('storageAccountName'), environment().suffixes.storage, listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2020-08-01-preview').keys[0].value)]"
+                    },
+                    {
+                      "name": "FUNCTIONS_EXTENSION_VERSION",
+                      "value": "~4"
+                    },
+                    {
+                      "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                      "value": "[reference(resourceId('Microsoft.Insights/components', parameters('appInsightsName'))).InstrumentationKey]"
+                    },
+                    {
+                      "name": "FUNCTIONS_WORKER_RUNTIME",
+                      "value": "dotnet"
+                    }
+                  ]
+                }
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Insights/components', parameters('appInsightsName'))]",
+                "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "id": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]"
+            },
+            "settings": {
+              "type": "object",
+              "value": "[list(format('{0}/config/appsettings', resourceId('Microsoft.Web/sites', parameters('functionAppName'))), '2020-12-01').properties]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', parameters('functionResourceGroup'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[parameters('containerInstanceName')]",
+      "resourceGroup": "[parameters('functionResourceGroup')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "containerName": {
+            "value": "[parameters('containerInstanceName')]"
+          },
+          "imageName": {
+            "value": "[format('{0}:{1}', parameters('containerImage'), parameters('containerImageTag'))]"
+          },
+          "dnsName": {
+            "value": "[parameters('dnsZone')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "acrName": {
+            "value": "[parameters('acrName')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1318.3566",
+              "templateHash": "15400743205540641819"
+            }
+          },
+          "parameters": {
+            "containerName": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "westeurope"
+            },
+            "imageName": {
+              "type": "string"
+            },
+            "cpuCores": {
+              "type": "int",
+              "defaultValue": 1
+            },
+            "memoryInGb": {
+              "type": "int",
+              "defaultValue": 1
+            },
+            "dnsName": {
+              "type": "string"
+            },
+            "acrName": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/dnsZones/A",
+              "apiVersion": "2018-05-01",
+              "name": "[format('{0}/{1}', parameters('dnsName'), parameters('containerName'))]",
+              "properties": {
+                "TTL": 60,
+                "ARecords": [
+                  {
+                    "ipv4Address": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups', parameters('containerName'))).ipAddress.ip]"
+                  }
+                ]
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.ContainerInstance/containerGroups', parameters('containerName'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.ContainerInstance/containerGroups",
+              "apiVersion": "2019-12-01",
+              "name": "[parameters('containerName')]",
+              "location": "[parameters('location')]",
+              "properties": {
+                "imageRegistryCredentials": [
+                  {
+                    "server": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'aksupdates-common'), 'Microsoft.ContainerRegistry/registries', parameters('acrName')), '2019-12-01-preview').loginServer]",
+                    "username": "[listCredentials(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'aksupdates-common'), 'Microsoft.ContainerRegistry/registries', parameters('acrName')), '2019-12-01-preview').username]",
+                    "password": "[listCredentials(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'aksupdates-common'), 'Microsoft.ContainerRegistry/registries', parameters('acrName')), '2019-12-01-preview').passwords[0].value]"
+                  }
+                ],
+                "containers": [
+                  {
+                    "name": "[parameters('containerName')]",
+                    "properties": {
+                      "image": "[parameters('imageName')]",
+                      "resources": {
+                        "requests": {
+                          "cpu": "[parameters('cpuCores')]",
+                          "memoryInGB": "[parameters('memoryInGb')]"
+                        }
+                      },
+                      "environmentVariables": [
+                        {
+                          "name": "ASPNETCORE_URLS",
+                          "value": "http://+:8080"
+                        },
+                        {
+                          "name": "azureTableStorageConfiguration__tableStorageName",
+                          "value": "aksupdates"
+                        },
+                        {
+                          "name": "azureTableStorageConfiguration__tableStorageConnectionString",
+                          "value": "DefaultEndpointsProtocol=https;AccountName=aksupddatadev;EndpointSuffix=core.windows.net;AccountKey=H19HjH8DEb974REdKvGSva5CrE1L+d9OgZJ5bl72rgwPyM71vMFsGYdM4COQnl7jibwDWjgFv2pMdZ9sA+VLJw=="
+                        }
+                      ],
+                      "ports": [
+                        {
+                          "protocol": "TCP",
+                          "port": 8080
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "caddy",
+                    "properties": {
+                      "image": "caddy:latest",
+                      "command": [
+                        "caddy",
+                        "reverse-proxy",
+                        "--from",
+                        "akslatestversiondev.techdriven.nl",
+                        "--to",
+                        "localhost:8080"
+                      ],
+                      "ports": [
+                        {
+                          "protocol": "TCP",
+                          "port": 80
+                        },
+                        {
+                          "protocol": "TCP",
+                          "port": 443
+                        }
+                      ],
+                      "resources": {
+                        "requests": {
+                          "cpu": 1,
+                          "memoryInGB": 1
+                        }
+                      }
+                    }
+                  }
+                ],
+                "restartPolicy": "OnFailure",
+                "osType": "Linux",
+                "ipAddress": {
+                  "type": "Public",
+                  "dnsNameLabel": "[parameters('dnsName')]",
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": 80
+                    },
+                    {
+                      "protocol": "TCP",
+                      "port": 443
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "outputs": {
+            "containerIpv4Address": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups', parameters('containerName'))).ipAddress.ip]"
+            },
+            "containerDnsName": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups', parameters('containerName'))).ipAddress.fqdn]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', parameters('functionResourceGroup'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}settings', parameters('functionAppName'))]",
+      "resourceGroup": "[parameters('functionResourceGroup')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "functionAppName": {
+            "value": "[parameters('functionAppName')]"
+          },
+          "applicationId": {
+            "value": "[parameters('applicationId')]"
+          },
+          "servicePrincipalPassword": {
+            "value": "[parameters('servicePrincipalPassword')]"
+          },
+          "subscriptionId": {
+            "value": "[parameters('subscriptionId')]"
+          },
+          "tableStorageConnectionString": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('storageResourceGroup')), 'Microsoft.Resources/deployments', parameters('storageAccountName'))).outputs.blobStorageConnectionString.value]"
+          },
+          "tableStorageName": {
+            "value": "[parameters('tableStorageName')]"
+          },
+          "tenantId": {
+            "value": "[parameters('tenantId')]"
+          },
+          "toggleSendNotifications": {
+            "value": "[parameters('toggleSendNotifications')]"
+          },
+          "twitterAccessToken": {
+            "value": "[parameters('twitterAccessToken')]"
+          },
+          "twitterAccessTokenSecret": {
+            "value": "[parameters('twitterAccessTokenSecret')]"
+          },
+          "twitterApiKey": {
+            "value": "[parameters('twitterApiKey')]"
+          },
+          "twitterApiSecretKey": {
+            "value": "[parameters('twitterApiSecretKey')]"
+          },
+          "existingFunctionAppStagingAppsettings": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('functionResourceGroup')), 'Microsoft.Resources/deployments', parameters('functionAppName'))).outputs.settings.value]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1318.3566",
+              "templateHash": "8482651194818656556"
+            }
+          },
+          "parameters": {
+            "functionAppName": {
+              "type": "string"
+            },
+            "tenantId": {
+              "type": "string"
+            },
+            "subscriptionId": {
+              "type": "string"
+            },
+            "applicationId": {
+              "type": "string"
+            },
+            "servicePrincipalPassword": {
+              "type": "string"
+            },
+            "twitterApiKey": {
+              "type": "string"
+            },
+            "twitterApiSecretKey": {
+              "type": "string"
+            },
+            "twitterAccessToken": {
+              "type": "string"
+            },
+            "twitterAccessTokenSecret": {
+              "type": "string"
+            },
+            "toggleSendNotifications": {
+              "type": "string"
+            },
+            "tableStorageConnectionString": {
+              "type": "string"
+            },
+            "tableStorageName": {
+              "type": "string"
+            },
+            "existingFunctionAppStagingAppsettings": {
+              "type": "object"
+            }
+          },
+          "variables": {
+            "newSettings": {
+              "tenantId": "[parameters('tenantId')]",
+              "subscriptionId": "[parameters('subscriptionId')]",
+              "applicationId": "[parameters('applicationId')]",
+              "servicePrincipalPassword": "[parameters('servicePrincipalPassword')]",
+              "azureTableStorageConfiguration__tableStorageName": "[parameters('tableStorageName')]",
+              "azureTableStorageConfiguration__tableStorageConnectionString": "[parameters('tableStorageConnectionString')]",
+              "twitterApiKey": "[parameters('twitterApiKey')]",
+              "twitterApiSecretKey": "[parameters('twitterApiSecretKey')]",
+              "twitterAccessToken": "[parameters('twitterAccessToken')]",
+              "twitterAccessTokenSecret": "[parameters('twitterAccessTokenSecret')]",
+              "toggle_SendNotification": "[parameters('toggleSendNotifications')]"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/sites/config",
+              "apiVersion": "2021-03-01",
+              "name": "[format('{0}/{1}', parameters('functionAppName'), 'appsettings')]",
+              "properties": "[union(parameters('existingFunctionAppStagingAppsettings'), variables('newSettings'))]"
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('functionResourceGroup')), 'Microsoft.Resources/deployments', parameters('functionAppName'))]",
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', parameters('functionResourceGroup'))]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('storageResourceGroup')), 'Microsoft.Resources/deployments', parameters('storageAccountName'))]"
+      ]
+    }
+  ]
+}

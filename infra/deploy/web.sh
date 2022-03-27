@@ -1,0 +1,1 @@
+docker build -f ./src/AksUpdates.WebUI/Dockerfile -t aksupdates.azurecr.io/aksupdates.webui:1 ./src
