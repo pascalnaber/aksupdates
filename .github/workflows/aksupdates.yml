@@ -105,6 +105,7 @@ jobs:
           subscriptionId: ${{ secrets.subscriptionId }}  
           region: westeurope        
           template: ./infra/bicep/common.bicep
+          failOnStdErr: false
           parameters: ./infra/bicep/common.parameters.json
 
       - uses: azure/arm-deploy@v1
