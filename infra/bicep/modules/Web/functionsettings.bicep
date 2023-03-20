@@ -23,7 +23,7 @@ var newSettings = {
   twitterApiSecretKey: twitterApiSecretKey
   twitterAccessToken: twitterAccessToken
   twitterAccessTokenSecret: twitterAccessTokenSecret
-  toggle_SendNotification: toggleSendNotifications 
+  Toggle_SendNotification: toggleSendNotifications 
 }
 
 resource functionApp 'Microsoft.Web/sites@2018-11-01' existing = {

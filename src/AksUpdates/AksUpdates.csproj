@@ -4,6 +4,16 @@
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="local.settings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
